@@ -12,6 +12,8 @@ Este é um guia gratuito para montar a árvore genealógica da sua família usan
 
 Guia completo (landing + passo a passo): **https://inematds.github.io/arvore-genealogica-ia/guia/**
 
+🎬 Vídeo (o que funciona e onde a IA inventa parentes): **https://inematds.github.io/arvore-genealogica-ia/videos/**
+
 ## A regra
 
 > **A IA não é o detetive. É a sua assistente. Quem confirma é o documento.**

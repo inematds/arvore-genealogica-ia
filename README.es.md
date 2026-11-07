@@ -12,6 +12,8 @@ Esta es una guía gratuita para armar el árbol genealógico de tu familia usand
 
 Guía completa (página de presentación + paso a paso): **https://inematds.github.io/arvore-genealogica-ia/guia/es/**
 
+🎬 Video (qué funciona y dónde la IA inventa parientes, en portugués): **https://inematds.github.io/arvore-genealogica-ia/videos/**
+
 ## La regla
 
 > **La IA no es la detective. Es tu asistente. Quien confirma es el documento.**

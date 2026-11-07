@@ -12,6 +12,8 @@ This is a free guide to building your family tree using an AI chat (ChatGPT, Cla
 
 Complete guide (landing page + step-by-step instructions): **https://inematds.github.io/arvore-genealogica-ia/guia/en/**
 
+🎬 Video (what works and where AI invents relatives, in Portuguese): **https://inematds.github.io/arvore-genealogica-ia/videos/**
+
 ## The rule
 
 > **AI isn’t the detective. It’s your assistant. The document is what confirms things.**
