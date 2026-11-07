@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Family Tree with AI — what works and where AI makes up relatives</title>
+<meta content="Myth × truth about the viral video “ChatGPT builds your family tree and finds relatives.” Prompts that prevent hallucinations, where to do real research (FamilySearch, civil registry office, Antenati, DNA), and how to verify every name." name="description"/>
+
+
+
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:760px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;height:auto;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap}
+  .pr{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-family:"JetBrains Mono",monospace;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;height:auto;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+  .cp{display:block;margin:-6px 0 14px auto;background:var(--bg2);border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:.35em .8em;font-family:Sora;font-size:.8rem;cursor:pointer}
+  .cp:hover{border-color:var(--amb)}
+  .tbl{width:100%;border-collapse:collapse;font-size:.92rem}
+  .tbl th,.tbl td{border-bottom:1px solid var(--line);padding:12px 10px;text-align:left;vertical-align:top}
+  .tbl th{font-family:Sora;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+  .tbl td.v{white-space:nowrap;font-weight:600}
+  .ok{color:#4ade80} .meio{color:var(--amb)} .nao{color:#f87171}
+  .tblw{overflow-x:auto}
+  .regra{margin-top:26px;border-left:4px solid var(--amb);background:var(--card);padding:18px 20px;border-radius:0 12px 12px 0;font-family:Sora;font-size:1.15rem;font-weight:600}
+  @media(max-width:600px){.tbl td.v{white-space:normal}}
+</style>
+<link href="https://inematds.github.io/arvore-genealogica-ia/guia/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/arvore-genealogica-ia/guia/en/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/arvore-genealogica-ia/guia/es/" hreflang="es" rel="alternate"/></head>
+<body>
+<nav><div class="wrap">
+<a class="brand" href="#top"><span class="emoji">🌳</span> Family Tree with AI</a>
+<span class="sep">|</span>
+<span class="clubpro">
+<a class="inema" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="sep">-</span>
+<a class="pro" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</span>
+<div class="links">
+<a class="sec" href="#oque">Myth × truth</a>
+<a class="sec" href="#guia">Step by step</a>
+<a class="sec" href="#onde">Where to research</a>
+<a class="sec" href="#conferir">Verify</a>
+<span class="lang"><a href="../">PT</a><a class="on" href="./">EN</a><a href="../es/">ES</a></span>
+<button aria-label="Toggle theme" class="tgl" id="themeToggle" title="Toggle theme">🌙</button>
+<a class="btn" href="https://github.com/inematds/arvore-genealogica-ia" rel="noopener" target="_blank">GitHub</a>
+</div>
+</div></nav>
+<header class="hero" id="top">
+<div class="glow"></div>
+<div class="wrap">
+<div>
+<span class="chip">Myth vs. fact · genealogy with AI</span>
+<h1>Your family tree with <span class="amb">AI</span>, with no made-up relatives</h1>
+<p class="lead">The viral video promises a complete family tree, unknown relatives, and even citizenship. Part of it works. The rest is where AI hallucinates.</p>
+<div class="cta">
+<a class="btn" href="#guia">Start the step-by-step guide</a>
+<a class="btn ghost" href="https://github.com/inematds/arvore-genealogica-ia" rel="noopener" target="_blank">View on GitHub</a>
+</div>
+</div>
+<figure><img alt="Banner: your family tree with AI, what works and where AI makes up relatives" src="../assets/banner-en.jpg"/></figure>
+</div>
+</header>
+<section class="resumo" id="resumo"><div class="wrap">
+<span class="chip">In short</span>
+<p>This is a free guide to building your family tree using an AI chat (ChatGPT, Claude, Gemini) the right way. It explains what the viral video “ChatGPT finds your relatives” gets right and where AI makes people up. It includes 8 ready-to-use prompts that require AI to show its proof, a list of archives where you can do real research, and a checklist for verifying every name. All you need is an AI chat and, if you want a visual family tree, Python 3.</p>
+<div class="regra" style="font-size:1rem">📱 Only use chat on your phone? Steps 1 through 7 are enough. Step 8 (drawing the tree with the script) is optional and requires a computer, or you can ask the chat itself to draw it.</div>
+</div></section>
+<section id="oque"><div class="wrap">
+<span class="chip">Myth × truth</span>
+<h2>What the viral video promises, step by step</h2>
+<p class="sub">Four requests to the chat and a promise of citizenship. See what holds up and why.</p>
+<figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img alt="Myth vs. fact, prompts that work, where to research, how to verify each name, DNA testing, and citizenship" loading="lazy" src="../assets/banner-grade-en.jpg" style="width:100%;display:block"/></figure>
+<div class="tblw"><table class="tbl">
+<tr><th>Promise</th><th>Does it work?</th><th>Why</th></tr>
+<tr><td>1. "Ask me everything and build my initial family tree"</td><td class="v ok">✅ Yes</td><td>AI only organizes what <b>you</b> counted. There's nothing to make up.</td></tr>
+<tr><td>2. "Tell the story of my family line based on my surname"</td><td class="v meio">⚠️ Half-truth</td><td>The origin of the surname is generic. <b>Having the same last name doesn’t mean you’re in the same family.</b></td></tr>
+<tr><td>3. "Research records and find relatives I don’t know about"</td><td class="v nao">❌ Makes things up</td><td>Good databases require a login or are paid, and many Brazilian records aren’t indexed online. With common names, AI mixes up people with the same name and <b>fills in the gaps with plausible people</b>. "Names you’ve never heard of" are exactly the danger.</td></tr>
+<tr><td>4. "Build the complete visual family tree"</td><td class="v ok">✅ Draws</td><td>But the diagram doesn’t make the names from step 3 true.</td></tr>
+<tr><td>+ "You’re going to find a citizenship"</td><td class="v nao">❌ Exaggeration</td><td>Citizenship is proven with <b>certificates</b>. And the rules have gotten stricter: Italy limited citizenship by descent in 2025 (Law 74/2025), and Portugal changed its nationality law in 2025–2026, with parts challenged in the Constitutional Court. Information verified in November 2026: confirm with the consulate.</td></tr>
+</table></div>
+<div class="regra">AI isn’t the detective. It’s your assistant. The document is what confirms it.</div>
+<div class="grid g3" style="margin-top:26px">
+<div class="card"><h3>🧠 Why it makes things up</h3><p>A language model writes the most likely text, not the most truthful. Without finding the record, the “likely” answer is a list of names that look real.</p></div>
+<div class="card"><h3>📄 Where it shines</h3><p>Organize what you know, read old handwriting, translate Latin and Italian from records, suggest where to look, and put together a list of documents.</p></div>
+<div class="card"><h3>🧬 Truly unknown relatives</h3><p>Only a genealogy DNA test can find cousins you don't know without starting from a document. AI can't do that.</p></div>
+</div>
+</div></section>
+<section id="fluxo"><div class="wrap">
+<span class="chip">How it works</span>
+<h2>The approach that works</h2>
+<p class="sub">Start with living relatives, move on to documents, and only add people to the tree when you have proof.</p>
+<div class="flow">
+<span>Family interview</span><span class="arr">→</span>
+<span>Organized table</span><span class="arr">→</span>
+<span>Read documents</span><span class="arr">→</span>
+<span>Where to look</span><span class="arr">→</span>
+<span>Research backed by evidence</span><span class="arr">→</span>
+<span>Verify every name</span><span class="arr">→</span>
+<span>Tree with confirmed people only</span>
+</div>
+</div></section>
+<section id="pre"><div class="wrap">
+<span class="chip">What you need</span>
+<h2>Three things, one optional</h2>
+<p class="sub">Nothing paid is required.</p>
+<div class="grid g3">
+<div class="card"><h3>💬 An AI chat</h3><p>ChatGPT, Claude, or Gemini. For step 5, turn on web search in the chat (the search button or agent mode, if your plan includes it). To read documents, send the photo using the attachment clip.</p></div>
+<div class="card"><h3>🔎 FamilySearch account</h3><p>Free, with registration, at familysearch.org. It’s the largest free collection of records, including records from Brazil.</p></div>
+<div class="card"><h3>🐍 Python 3 (optional)</h3><p>Only for step 8. It comes with Linux; on Windows and Mac, install it from python.org. Download the project using the green button <b>Code → Download ZIP</b> on GitHub and unzip it, or use git:</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/arvore-genealogica-ia</span>
+<span class="k">cd</span> arvore-genealogica-ia</pre></div>
+</div>
+</div></section>
+<section id="guia"><div class="wrap">
+<span class="chip">Step by step · 8 prompts</span>
+<h2>Copy, paste, and replace what’s between &lt; &gt;</h2>
+<p class="sub">The prompts are also in the folder <code>prompts/</code> from the repository. They all follow the same rule: without proof, it doesn't go in.</p>
+<div class="step"><div class="b">1</div><div>
+<h3>Family interview</h3>
+<p>Start with living relatives. AI asks the questions and prepares a guide for you to talk with your oldest relative.</p>
+<div class="pr">I want to build my family tree, starting with what my relatives and I know.
+1) Ask me questions ONE AT A TIME: my full name, date and place of birth, and the same for my parents, grandparents, and great-grandparents. Also ask about nicknames, occupation, religion, where they came from, and when they arrived in Brazil.
+2) Then put together a list of 15 questions for me to ask my oldest relative.
+3) Rule: DO NOT add any person, date, or place that I haven’t mentioned. When something is missing, write "I don’t know" and say which document could confirm it.</div>
+</div></div>
+<div class="step"><div class="b">2</div><div>
+<h3>Organize it in a table</h3>
+<p>Everything becomes a table with the column <code>fonte</code> and the column <code>status</code>. It’s the one the script draws in step 8.</p>
+<div class="pr">Based on everything I’ve told you, create a CSV table with these columns, in this order:
+id,name,birth,place_of_birth,father_id,mother_id,source,status,note
+- Short, unique id (p01, p02...). father_id and mother_id use these ids.
+- source = link to the record or the document. Leave blank if there isn’t one.
+- status = CONFIRMED only if the source is filled in; otherwise HYPOTHESIS.
+- note = what’s missing for confirmation. Don’t make anyone up. Respond with only the CSV.</div>
+<p>CSV is a text table with columns separated by commas. To save it: copy the response, paste it into Notepad (Windows) or TextEdit in plain text mode (Mac), and save it as <code>minha-familia.csv</code> inside the project folder. Or paste it into Google Sheets and download it as .csv.</p>
+</div></div>
+<div class="step"><div class="b">3</div><div>
+<h3>Read an old document (photo)</h3>
+<p>AI is excellent at this: difficult handwriting, Latin, Italian, German. You verify it against the image.</p>
+<div class="pr">This is a photo of an old record from my family.
+1) Transcribe it exactly as written, line by line. Where you can’t read it, write [illegible] — don’t guess.
+2) Translate it into Portuguese.
+3) List: names, dates, places, parents, godparents/witnesses, occupation, and the book/page/entry number.
+Mark every uncertain reading with (?).</div>
+</div></div>
+<div class="step"><div class="b">4</div><div>
+<h3>Where to look</h3>
+<p>AI suggests archives and registry offices. Open each link before you trust it.</p>
+<div class="pr">My great-grandfather &lt;NAME&gt;, born around &lt;YEAR&gt; in &lt;CITY, COUNTRY&gt;, arrived in Brazil around &lt;YEAR&gt; and lived in &lt;CITY, STATE&gt;.
+List where to look for his records, in order of likelihood of success: online collections (OFFICIAL link and exact collection name), likely civil registry offices or parishes, immigration archives.
+For each one: type of record, whether it’s free, and whether it has name search or images only.
+If you’re not sure a collection exists, say “I’m not sure.”</div>
+</div></div>
+<div class="step"><div class="b">5</div><div>
+<h3>Research backed by evidence (the prompt that stops hallucinations)</h3>
+<p>The safe version of "find relatives I don’t know about." Use it in a chat that can browse the web.</p>
+<div class="pr">Search public records for &lt;FULL NAME&gt;, born around &lt;YEAR&gt; in &lt;PLACE&gt;, child of &lt;FATHER&gt; and &lt;MOTHER&gt;.
+REQUIRED RULES:
+1) Only include someone under CONFIRMED if you opened a record with NAME + DATE + PLACE, and give me the DIRECT LINK to the record and the collection name.
+2) Say which information in the record connects the person to my family (parents, spouse, address). A matching last name is NOT a connection.
+3) Put assumptions on a separate list, HYPOTHESES, with the reason and the document that would confirm them.
+4) If you find nothing, answer "I couldn't find anything." I prefer that to an invented name.
+5) Don't fill in dates or places that aren't in the record.</div>
+</div></div>
+<div class="step"><div class="b">6</div><div>
+<h3>Auditing an answer you already got</h3>
+<p>Already have a list that AI “found”? Open a chat <b>new</b> (without the history) and ask for an audit.</p>
+<div class="pr">Below is a list of relatives that an AI chat said it found in "public records." I do NOT trust it.
+For each person: say whether there’s a verifiable source (direct link, collection, book/page); classify as SOURCE TO CHECK or NO SOURCE (likely made up); point out inconsistencies (ages, dates, places, people with the same name).
+Don’t add or confirm anyone without a source.
+&lt;paste the list here&gt;</div>
+</div></div>
+<div class="step"><div class="b">7</div><div>
+<h3>Citizenship: the document checklist</h3>
+<p>AI organizes the process; the law and the consulate make the decision. Ask for the date of the information. The prompt terms (long-form certificate, Hague Apostille, sworn translation) are in the <a href="#glossario">glossary</a>.</p>
+<div class="pr">My ancestor &lt;NAME&gt;, born in &lt;YEAR&gt; in &lt;CITY, COUNTRY&gt;, is my &lt;great-grandfather/grandfather&gt;. The line down to me is: &lt;he&gt; → &lt;child&gt; → &lt;grandchild&gt; → me.
+1) List the certificates normally requested to prove this line, for each generation, and where each one comes from.
+2) Tell me which ones usually need a full record, an apostille of The Hague, and a sworn translation.
+3) Explain, with the DATE of your information, what I need to verify in the current law of &lt;COUNTRY&gt;, and give me the official consulate website link.
+4) Don’t tell me I “have a right”; tell me what I need to verify.</div>
+</div></div>
+<div class="step"><div class="b">8</div><div>
+<h3>Visual tree with confirmed people only</h3>
+<p>Open a terminal in the project folder (Windows: PowerShell; Mac: Terminal app; Linux: terminal) and run the script with the table from step 2. It also checks that anyone marked CONFIRMED without a source becomes a hypothesis, and flags impossible ages for a father or mother.</p>
+<pre><span class="k">python3</span> scripts/arvore.py minha-familia.csv --saida minha-arvore.html   <span class="c"># opens in the browser</span>
+<span class="k">python3</span> scripts/arvore.py minha-familia.csv --so-confirmados --saida so-provas.html
+<span class="k">python3</span> scripts/arvore.py modelos/pessoas.csv --saida exemplo.html   <span class="c"># fictional example family</span></pre>
+<p>The generated file opens in your browser and needs an internet connection to render. No computer? Ask the chat: "draw this table in Mermaid, HYPOTHESIS with a dashed border, without adding anyone" and paste the result into mermaid.live to see the drawing. To move the tree to a genealogy website, use the GEDCOM (.ged) format.</p>
+</div></div>
+</div></section>
+<section id="onde"><div class="wrap">
+<span class="chip">Where to really research</span>
+<h2>The archives AI won’t access for you</h2>
+<p class="sub">Start at home: certificates, work records, passports, letters, and photos with notes on the back. Then check these archives.</p>
+<div class="tblw"><table class="tbl">
+<tr><th>Where</th><th>What you need</th><th>Cost</th></tr>
+<tr><td><b>FamilySearch</b> (familysearch.org)</td><td>Civil and parish records from several states in Brazil and around the world. Many are only available as images, with no name search, so you have to browse through them.</td><td>Free</td></tr>
+<tr><td><b>Civil registry office</b></td><td>The certificate of <b>full text</b> (a faithful copy of the book) is the one that counts for citizenship. Request it at the registry office or online.</td><td>Paid</td></tr>
+<tr><td><b>Parishes and diocesan offices</b></td><td>Baptisms, marriages, and deaths from before civil registration became widespread.</td><td>Varies</td></tr>
+<tr><td><b>Public records and the National Archives</b></td><td>Immigration, naturalization, probate records. The National Archives holds passenger lists for ships that arrived in Rio.</td><td>Free</td></tr>
+<tr><td><b>Immigration Museum (SP)</b></td><td>Records from the Immigrant Inn and passenger lists.</td><td>Free</td></tr>
+<tr><td><b>Digital Newspaper Archive (National Library)</b></td><td>Old newspapers: marriages, deaths, ship arrivals.</td><td>Free</td></tr>
+<tr><td><b>Antenati Portal</b> (Italy)</td><td>Civil records from Italian state archives.</td><td>Free</td></tr>
+<tr><td><b>Digitarq</b> (Portugal)</td><td>Digitized parish records from district archives.</td><td>Free</td></tr>
+<tr><td><b>Registration</b> (Germany, Austria, Poland)</td><td>Catholic parish registers.</td><td>Free</td></tr>
+<tr><td><b>DNA test</b> (MyHeritage, Ancestry, and others)</td><td>Compare your DNA with that of other people who have been tested and find real cousins. Each company compares results against its own database; some sites accept DNA files from another company (upload), which broadens the search. DNA is sensitive data: read the privacy policy.</td><td>Paid</td></tr>
+</table></div>
+</div></section>
+<section id="conferir"><div class="wrap">
+<span class="chip">Verify</span>
+<h2>Before adding someone to the family tree</h2>
+<p class="sub">Check each new person against this list. Without every item, they remain a HYPOTHESIS.</p>
+<div class="ex">
+<div class="card">
+<h3>✅ Checklist</h3>
+<p>□ Is there a source (record link or document)?<br/>□ Did I open the link myself, and does it show this person?<br/>□ Do the name, date, and place match (including old spellings)?<br/>□ Do the parents' ages make sense?<br/>□ Does the record name parents or a spouse already confirmed? <b>This is the link that distinguishes a relative from someone with the same name.</b><br/>□ For the link that leads to citizenship, are there two documents?</p>
+<h3 style="margin-top:18px">🚩 Signs of fabrication</h3>
+<p>A link that doesn’t open or shows someone else · “according to public records” without saying which ones · dates that are too round · people who fit your story perfectly · the source changes when you ask again.</p>
+</div>
+<figure><img alt="Example tree generated by the script: confirmed people have amber borders, hypotheses have dashed borders" loading="lazy" src="../assets/exemplo-arvore.jpg"/><figcaption>Output from <code>scripts/arvore.py</code> with the fictional example family: confirmed people have amber borders, hypotheses have dashed borders. "Luigi" was marked as confirmed without a source, and the script downgraded him.</figcaption></figure>
+</div>
+</div></section>
+<section id="glossario"><div class="wrap">
+<span class="chip">Glossary</span>
+<h2>The tricky words, in one line</h2>
+<p class="sub">So no one gets stuck along the way.</p>
+<div class="grid g3">
+<div class="card"><h3>Hallucination</h3><p>When AI makes something up that looks real: a name, a date, a record that doesn’t exist.</p></div>
+<div class="card"><h3>Person with the same name</h3><p>A different person with the same name. The biggest risk in genealogy: finding the wrong "José Rossi."</p></div>
+<div class="card"><h3>Indexed</h3><p>A record you can find by typing in a name. Not indexed = only a photo of the book, so you have to browse page by page.</p></div>
+<div class="card"><h3>Parish record</h3><p>A baptism, marriage, or death recorded in the church book. Before civil registry offices, it was the main record.</p></div>
+<div class="card"><h3>Full record</h3><p>A certificate that copies the complete record from the registry office book, including parents, grandparents, and notes. It’s the one that counts for citizenship.</p></div>
+<div class="card"><h3>Hague Apostille</h3><p>A seal made by a notary that makes a Brazilian document valid in another country.</p></div>
+<div class="card"><h3>Certified translation</h3><p>Official translation, done by a registered public translator, required for citizenship applications.</p></div>
+<div class="card"><h3>CSV</h3><p>Table saved as text, with columns separated by commas. Opens in Excel and Google Sheets.</p></div>
+<div class="card"><h3>Mermaid and GEDCOM</h3><p>Mermaid is a language that turns text into a diagram. GEDCOM (.ged) is the standard file format for moving a family tree from one genealogy site to another.</p></div>
+</div>
+</div></section>
+<section id="roadmap"><div class="wrap">
+<span class="chip">Your plan</span>
+<h2>One month to build a reliable family tree</h2>
+<p class="sub">Real genealogy takes time. That’s good: every name you add stays.</p>
+<div class="phase"><div class="tag">Today</div><div class="d"><strong>Interview and table</strong><span>Prompts 1 and 2. Call your oldest relative and gather the papers at home.</span></div></div>
+<div class="phase"><div class="tag">Week 1</div><div class="d"><strong>Documents</strong><span>Photograph certificates and records, then transcribe them with prompt 3. Create a FamilySearch account.</span></div></div>
+<div class="phase"><div class="tag">Weeks 2–3</div><div class="d"><strong>Research backed by evidence</strong><span>Prompts 4 and 5, one generation at a time. Check every find against the checklist.</span></div></div>
+<div class="phase"><div class="tag">Week 4</div><div class="d"><strong>Family tree and next steps</strong><span>Step 8 script. If you want to find unknown relatives, consider DNA testing; if you want citizenship, use prompt 7 and contact the consulate.</span></div></div>
+</div></section>
+<footer>
+<div class="wrap">
+<div class="pill">Prompts</div><div class="pill">Python 3</div><div class="pill">Mermaid</div>
+<p style="margin-top:18px">Family Tree with AI · open and free content ·
+      <a href="https://github.com/inematds/arvore-genealogica-ia">inematds/arvore-genealogica-ia</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+  (function(){
+    var KEY='arvore-genealogica-ia-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; }
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      localStorage.setItem(KEY, light?'light':'dark');
+    });
+  })();
+  document.querySelectorAll('.pr').forEach(function(el){
+    var bt=document.createElement('button'); bt.className='cp'; bt.type='button';
+    var ok=bt.dataset.ok='Copied!'; bt.textContent='Copy prompt';
+    bt.addEventListener('click',function(){
+      var txt=el.innerText;
+      (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(function(){
+        var o=bt.textContent; bt.textContent=ok; setTimeout(function(){bt.textContent=o;},1500);
+      }).catch(function(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);});
+    });
+    el.insertAdjacentElement('afterend',bt);
+  });
+</script>
+</body>
+</html>

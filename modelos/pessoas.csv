@@ -1,0 +1,9 @@
+id,nome,nascimento,local_nascimento,pai_id,mae_id,fonte,status,nota
+p01,Ana Exemplo Rossi,1985,"Caxias do Sul, RS",p02,p03,certidão de nascimento (original em casa),CONFIRMADO,família fictícia de exemplo
+p02,Carlos Rossi,1955,"Caxias do Sul, RS",p04,p05,certidão de casamento dos pais (cartório de Caxias),CONFIRMADO,
+p03,Maria Exemplo,1958,"Bento Gonçalves, RS",,,,HIPOTESE,falta certidão de nascimento
+p04,Giuseppe Rossi,1921,"Caxias do Sul, RS",p06,,"batismo, Paróquia Santa Teresa, Caxias do Sul, livro 12, folha 34 (foto em casa)",CONFIRMADO,
+p05,Teresa Bianchi,1925,"Flores da Cunha, RS",,,,HIPOTESE,nome contado pela avó
+p06,Antonio Rossi,1890,"Vêneto, Itália",,,,HIPOTESE,"chat de IA sugeriu; sem registro. Procurar no Portal Antenati"
+p07,Luigi Rossi,1880,"Vêneto, Itália",,,,CONFIRMADO,"a IA disse 'irmão de Antonio' sem fonte: o script rebaixa"
+p08,Pietro Rossi,1860,"Vêneto, Itália",,,https://www.familysearch.org/,CONFIRMADO,"fonte é só o site, não um registro: o script rebaixa"

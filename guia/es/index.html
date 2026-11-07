@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Árbol genealógico con IA — qué funciona y dónde la IA inventa parientes</title>
+<meta content="Mito × verdad del video viral 'ChatGPT arma tu árbol genealógico y encuentra parientes'. Prompts que frenan las alucinaciones, dónde buscar de verdad (FamilySearch, registro civil, Antenati, ADN) y cómo comprobar cada nombre." name="description"/>
+
+
+
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:760px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;height:auto;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap}
+  .pr{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-family:"JetBrains Mono",monospace;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;height:auto;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+  .cp{display:block;margin:-6px 0 14px auto;background:var(--bg2);border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:.35em .8em;font-family:Sora;font-size:.8rem;cursor:pointer}
+  .cp:hover{border-color:var(--amb)}
+  .tbl{width:100%;border-collapse:collapse;font-size:.92rem}
+  .tbl th,.tbl td{border-bottom:1px solid var(--line);padding:12px 10px;text-align:left;vertical-align:top}
+  .tbl th{font-family:Sora;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+  .tbl td.v{white-space:nowrap;font-weight:600}
+  .ok{color:#4ade80} .meio{color:var(--amb)} .nao{color:#f87171}
+  .tblw{overflow-x:auto}
+  .regra{margin-top:26px;border-left:4px solid var(--amb);background:var(--card);padding:18px 20px;border-radius:0 12px 12px 0;font-family:Sora;font-size:1.15rem;font-weight:600}
+  @media(max-width:600px){.tbl td.v{white-space:normal}}
+</style>
+<link href="https://inematds.github.io/arvore-genealogica-ia/guia/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/arvore-genealogica-ia/guia/en/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/arvore-genealogica-ia/guia/es/" hreflang="es" rel="alternate"/></head>
+<body>
+<nav><div class="wrap">
+<a class="brand" href="#top"><span class="emoji">🌳</span> Árbol con IA</a>
+<span class="sep">|</span>
+<span class="clubpro">
+<a class="inema" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="sep">-</span>
+<a class="pro" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</span>
+<div class="links">
+<a class="sec" href="#oque">Mito × verdad</a>
+<a class="sec" href="#guia">Paso a paso</a>
+<a class="sec" href="#onde">Dónde investigar</a>
+<a class="sec" href="#conferir">Verificar</a>
+<span class="lang"><a href="../">PT</a><a href="../en/">EN</a><a class="on" href="./">ES</a></span>
+<button aria-label="Cambiar tema" class="tgl" id="themeToggle" title="Cambiar tema">🌙</button>
+<a class="btn" href="https://github.com/inematds/arvore-genealogica-ia" rel="noopener" target="_blank">GitHub</a>
+</div>
+</div></nav>
+<header class="hero" id="top">
+<div class="glow"></div>
+<div class="wrap">
+<div>
+<span class="chip">Mito × verdad · genealogía con IA</span>
+<h1>Tu árbol genealógico con <span class="amb">IA</span>, sin parientes inventados</h1>
+<p class="lead">El video viral promete un árbol completo, parientes desconocidos e incluso ciudadanía. Una parte funciona. En la otra es donde la IA alucina.</p>
+<div class="cta">
+<a class="btn" href="#guia">Empezar el paso a paso</a>
+<a class="btn ghost" href="https://github.com/inematds/arvore-genealogica-ia" rel="noopener" target="_blank">Ver en GitHub</a>
+</div>
+</div>
+<figure><img alt="Banner: tu árbol con IA, qué funciona y dónde la IA inventa parientes" src="../assets/banner-es.jpg"/></figure>
+</div>
+</header>
+<section class="resumo" id="resumo"><div class="wrap">
+<span class="chip">En resumen</span>
+<p>Esta es una guía gratuita para armar el árbol genealógico de tu familia usando un chat de IA (ChatGPT, Claude, Gemini) de la manera correcta. Explica qué acierta y en qué inventa personas el video viral "ChatGPT encuentra a tus parientes". Incluye 8 prompts listos para usar que obligan a la IA a mostrar las pruebas, una lista de archivos donde buscar de verdad y una lista de verificación para comprobar cada nombre. Para usarla, solo necesitas un chat de IA y, si quieres dibujar el árbol, Python 3.</p>
+<div class="regra" style="font-size:1rem">📱 ¿Solo usas el chat en el celular? Los pasos 1 a 7 son suficientes. El paso 8 (dibujar el árbol con el script) es opcional y requiere una computadora, o puedes pedirle al propio chat que haga el dibujo.</div>
+</div></section>
+<section id="oque"><div class="wrap">
+<span class="chip">Mito × verdad</span>
+<h2>Lo que promete el video viral, paso a paso</h2>
+<p class="sub">Cuatro pedidos al chat y una promesa de ciudadanía. Mira qué se sostiene y por qué.</p>
+<figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img alt="Mito × verdad, prompts que funcionan, dónde investigar, verificar cada nombre, prueba de ADN y ciudadanía" loading="lazy" src="../assets/banner-grade-es.jpg" style="width:100%;display:block"/></figure>
+<div class="tblw"><table class="tbl">
+<tr><th>Promesa</th><th>¿Funciona?</th><th>Por qué</th></tr>
+<tr><td>1. "Pregúntame todo y arma mi árbol inicial"</td><td class="v ok">✅ Sí</td><td>La IA solo organiza lo que <b>tú</b> contó. No hay nada que inventar.</td></tr>
+<tr><td>2. "Cuenta la historia de mi linaje a partir del apellido"</td><td class="v meio">⚠️ Media verdad</td><td>El origen del apellido es genérico. <b>Compartir apellido no significa pertenecer a la misma familia.</b></td></tr>
+<tr><td>3. "Investiga registros y encuentra parientes que no tengo"</td><td class="v nao">❌ Inventa</td><td>Las buenas bases de datos requieren iniciar sesión o son de pago, y muchos registros brasileños no están indexados en internet. Con nombres comunes, la IA mezcla homónimos (personas diferentes con el mismo nombre) y <b>rellena los huecos con personas plausibles</b>. "Nombres que nunca has oído" es justamente el peligro.</td></tr>
+<tr><td>4. "Arma el árbol visual completo"</td><td class="v ok">✅ Dibuja</td><td>Pero el dibujo no hace que los nombres del paso 3 sean verdaderos.</td></tr>
+<tr><td>+ "Vas a encontrar una ciudadanía"</td><td class="v nao">❌ Exageración</td><td>La ciudadanía se demuestra con <b>certificados</b>. Y las reglas se endurecieron: Italia limitó la ciudadanía por descendencia en 2025 (Ley 74/2025), y Portugal cambió la ley de nacionalidad en 2025–2026, con partes cuestionadas ante el Tribunal Constitucional. Información verificada en noviembre de 2026: confirma en el consulado.</td></tr>
+</table></div>
+<div class="regra">La IA no es la detective. Es tu asistente. Quien confirma es el documento.</div>
+<div class="grid g3" style="margin-top:26px">
+<div class="card"><h3>🧠 Por qué inventa</h3><p>Un modelo de lenguaje escribe el texto más probable, no el más verdadero. Sin encontrar el registro, la respuesta «probable» es una lista de nombres que parecen reales.</p></div>
+<div class="card"><h3>📄 Dónde destaca</h3><p>Organizar lo que sabes, leer caligrafía antigua, traducir registros en latín e italiano, sugerir dónde buscar y armar la lista de documentos.</p></div>
+<div class="card"><h3>🧬 Parientes desconocidos de verdad</h3><p>Solo la prueba de ADN genealógico encuentra primos que no conoces sin partir de un documento. La IA no hace eso.</p></div>
+</div>
+</div></section>
+<section id="fluxo"><div class="wrap">
+<span class="chip">Cómo funciona</span>
+<h2>El camino que funciona</h2>
+<p class="sub">Empieza por las personas vivas, sigue con los documentos y solo agrega a alguien al árbol cuando tengas pruebas.</p>
+<div class="flow">
+<span>Entrevista familiar</span><span class="arr">→</span>
+<span>Tabla organizada</span><span class="arr">→</span>
+<span>Leer documentos</span><span class="arr">→</span>
+<span>Dónde buscar</span><span class="arr">→</span>
+<span>Investigación con pruebas</span><span class="arr">→</span>
+<span>Verificar cada nombre</span><span class="arr">→</span>
+<span>Árbol solo con confirmados</span>
+</div>
+</div></section>
+<section id="pre"><div class="wrap">
+<span class="chip">Lo que necesitas</span>
+<h2>Tres cosas, una opcional</h2>
+<p class="sub">Nada de pago es obligatorio.</p>
+<div class="grid g3">
+<div class="card"><h3>💬 Un chat de IA</h3><p>ChatGPT, Claude o Gemini. Para el paso 5, activa la búsqueda web del chat (el botón de búsqueda o el modo agente, si tu plan lo incluye). Para leer documentos, envía la foto con el ícono de adjuntar.</p></div>
+<div class="card"><h3>🔎 Cuenta en FamilySearch</h3><p>Gratis, con registro, en familysearch.org. Es el mayor archivo gratuito de registros, incluidos los de Brasil.</p></div>
+<div class="card"><h3>🐍 Python 3 (opcional)</h3><p>Solo para el paso 8. En Linux ya viene instalado; en Windows y Mac, instálalo desde python.org. Descarga el proyecto con el botón verde <b>Code → Download ZIP</b> en GitHub y descomprímelo, o usa git:</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/arvore-genealogica-ia</span>
+<span class="k">cd</span> arvore-genealogica-ia</pre></div>
+</div>
+</div></section>
+<section id="guia"><div class="wrap">
+<span class="chip">Paso a paso · 8 prompts</span>
+<h2>Copia, pega y reemplaza lo que está entre &lt; &gt;</h2>
+<p class="sub">Los prompts también están en la carpeta <code>prompts/</code> del repositorio. Todos siguen la misma regla: sin pruebas, no se incluye.</p>
+<div class="step"><div class="b">1</div><div>
+<h3>Entrevista familiar</h3>
+<p>Empieza por las personas vivas. La IA hace las preguntas y prepara la guía para que converses con el pariente de más edad.</p>
+<div class="pr">Quiero armar el árbol genealógico de mi familia empezando por lo que mis parientes y yo sabemos.
+1) Hazme preguntas, UNA A LA VEZ: mi nombre completo, fecha y lugar de nacimiento, y lo mismo sobre mis padres, abuelos y bisabuelos. Pregunta también por apodos, profesión, religión, de dónde vinieron y cuándo llegaron a Brasil.
+2) Después, arma una guía de 15 preguntas para hacerle a mi pariente de más edad.
+3) Regla: NO agregues ninguna persona, fecha ni lugar que yo no haya mencionado. Cuando falte algo, escribe "no sé" y di qué documento podría confirmarlo.</div>
+</div></div>
+<div class="step"><div class="b">2</div><div>
+<h3>Organizar en una tabla</h3>
+<p>Todo se convierte en una tabla con la columna <code>fonte</code> y la columna <code>status</code>. Es esa la que el script dibuja en el paso 8.</p>
+<div class="pr">Con todo lo que te conté, arma una tabla CSV con estas columnas, en este orden:
+id,nome,nascimento,local_nascimento,pai_id,mae_id,fonte,status,nota
+- id corto y único (p01, p02...). pai_id y mae_id usan esos ids.
+- fonte = enlace del registro o el documento. Vacío si no hay.
+- status = CONFIRMADO solo si la fuente está completada; de lo contrario, HIPOTESE.
+- nota = qué falta para confirmar. No inventes a nadie. Responde solo con el CSV.</div>
+<p>CSV es una tabla de texto, con las columnas separadas por comas. Para guardarla: copia la respuesta, pégala en el Bloc de notas (Windows) o en TextEdit en modo de texto sin formato (Mac) y guárdala como <code>minha-familia.csv</code> dentro de la carpeta del proyecto. O pégalo en Google Sheets y descárgalo como .csv.</p>
+</div></div>
+<div class="step"><div class="b">3</div><div>
+<h3>Leer un documento antiguo (foto)</h3>
+<p>Aquí la IA es excelente: caligrafía difícil, latín, italiano, alemán. Lo verificas con la imagen.</p>
+<div class="pr">Esta es la foto de un registro antiguo de mi familia.
+1) Transcribe exactamente lo que está escrito, línea por línea. Donde no se pueda leer, escribe [ilegible] — no adivines.
+2) Tradúcelo al portugués.
+3) Enumera: nombres, fechas, lugares, padres, padrinos/testigos, profesión y el número del libro/folio/acta.
+Marca con (?) toda lectura sobre la que tengas dudas.</div>
+</div></div>
+<div class="step"><div class="b">4</div><div>
+<h3>Dónde buscar</h3>
+<p>La IA sugiere archivos y registros civiles. Abre cada enlace antes de confiar.</p>
+<div class="pr">Mi bisabuelo &lt;NOME&gt;, nacido alrededor de &lt;ANO&gt; en &lt;CIDADE, PAÍS&gt;, llegó a Brasil alrededor de &lt;ANO&gt; y vivió en &lt;CIDADE, ESTADO&gt;.
+Enumera dónde buscar sus registros, en orden de probabilidad de éxito: archivos en línea (enlace OFICIAL y nombre exacto de la colección), registros civiles o parroquias probables, archivos de inmigración.
+Para cada uno: tipo de registro, si es gratis, si permite buscar por nombre o solo muestra imágenes.
+Si no tienes certeza de que exista un archivo, di "no tengo certeza".</div>
+</div></div>
+<div class="step"><div class="b">5</div><div>
+<h3>Investigación con pruebas (el prompt que frena las alucinaciones)</h3>
+<p>La versión segura de "encuentra parientes que no tengo". Úsala en un chat que navegue por la web.</p>
+<div class="pr">Investiga registros públicos de &lt;NOMBRE COMPLETO&gt;, nacido alrededor de &lt;AÑO&gt; en &lt;LUGAR&gt;, hijo de &lt;PADRE&gt; y &lt;MADRE&gt;.
+REGLAS OBLIGATORIAS:
+1) Incluye a una persona en CONFIRMADOS solo si abriste un registro con NOMBRE + FECHA + LUGAR, y dame el ENLACE directo al registro y el nombre de la colección.
+2) Di qué información del registro vincula a la persona con mi familia (padres, cónyuge, domicilio). Tener el mismo apellido NO es un vínculo.
+3) Pon las suposiciones en una lista aparte, HIPÓTESIS, con el motivo y el documento que las confirmaría.
+4) Si no encuentras nada, responde "no encontré nada". Prefiero eso a un nombre inventado.
+5) No completes fechas ni lugares que no aparezcan en el registro.</div>
+</div></div>
+<div class="step"><div class="b">6</div><div>
+<h3>Auditar una respuesta que ya recibiste</h3>
+<p>¿Ya tienes una lista de personas que la IA "encontró"? Abre un chat <b>nuevo</b> (sin el historial) y pide la auditoría.</p>
+<div class="pr">A continuación hay una lista de parientes que un chat de IA dijo haber encontrado en "registros públicos". NO confío en ella.
+Para cada persona: di si hay una fuente verificable (enlace directo, colección, libro/folio); clasifícala como CON FUENTE PARA VERIFICAR o SIN FUENTE (probable invención); señala incoherencias (edades, fechas, lugares, homónimos).
+No completes ni confirmes a nadie sin una fuente.
+&lt;pega aquí la lista&gt;</div>
+</div></div>
+<div class="step"><div class="b">7</div><div>
+<h3>Ciudadanía: la lista de documentos</h3>
+<p>La IA organiza el camino; quienes deciden son la ley y el consulado. Pide la fecha de la información. Los términos del prompt (copia íntegra, apostilla de La Haya, traducción jurada) están en el <a href="#glossario">glosario</a>.</p>
+<div class="pr">Mi antepasado &lt;NOME&gt;, nacido en &lt;ANO&gt; en &lt;CIDADE, PAÍS&gt;, es mi &lt;bisabuelo/abuelo&gt;. La línea hasta mí es: &lt;ele&gt; → &lt;filho&gt; → &lt;neto&gt; → yo.
+1) Enumera las actas que normalmente se solicitan para probar esta línea, de cada generación, y de dónde se obtiene cada una.
+2) Di cuáles suelen requerir copia íntegra, apostilla de La Haya y traducción jurada.
+3) Explica, con la FECHA de tu información, qué debo verificar en la ley vigente de &lt;PAÍS&gt; y dame el enlace al sitio oficial del consulado.
+4) No me digas que "tengo derecho": dime qué debo verificar.</div>
+</div></div>
+<div class="step"><div class="b">8</div><div>
+<h3>Árbol visual solo con quienes fueron confirmados</h3>
+<p>Abre la terminal dentro de la carpeta del proyecto (Windows: PowerShell; Mac: app Terminal; Linux: terminal) y ejecuta el script con la tabla del paso 2. También verifica lo siguiente: quien esté CONFIRMADO sin fuente pasa a ser una hipótesis, y las edades imposibles del padre o la madre generan una advertencia.</p>
+<pre><span class="k">python3</span> scripts/arvore.py minha-familia.csv --saida minha-arvore.html   <span class="c"># abrir en el navegador</span>
+<span class="k">python3</span> scripts/arvore.py minha-familia.csv --so-confirmados --saida so-provas.html
+<span class="k">python3</span> scripts/arvore.py modelos/pessoas.csv --saida exemplo.html   <span class="c"># familia ficticia de ejemplo</span></pre>
+<p>El archivo generado se abre en el navegador y necesita internet para dibujar. ¿No tienes computadora? Pídele al chat: "dibuja esta tabla en Mermaid, HIPÓTESIS con borde discontinuo, sin agregar a nadie" y pega el resultado en mermaid.live para ver el dibujo. Para llevar el árbol a un sitio de genealogía, usa el formato GEDCOM (.ged).</p>
+</div></div>
+</div></section>
+<section id="onde"><div class="wrap">
+<span class="chip">Dónde investigar de verdad</span>
+<h2>Los archivos que la IA no puede consultar por ti</h2>
+<p class="sub">Empieza en casa: certificados, libretas de trabajo, pasaportes, cartas y fotos con anotaciones al dorso. Después, consulta estos archivos.</p>
+<div class="tblw"><table class="tbl">
+<tr><th>Dónde</th><th>Lo que necesitas</th><th>Costo</th></tr>
+<tr><td><b>FamilySearch</b> (familysearch.org)</td><td>Registros civiles y parroquiales de varios estados de Brasil y del mundo. Muchos solo están disponibles como imágenes, sin búsqueda por nombre: hay que pasar las páginas.</td><td>Gratis</td></tr>
+<tr><td><b>Registro civil</b></td><td>El certificado de <b>copia íntegra</b> (copia fiel del libro) es la que sirve para la ciudadanía. Solicítala en el registro civil o por internet.</td><td>De pago</td></tr>
+<tr><td><b>Parroquias y curias</b></td><td>Bautismos, matrimonios y defunciones de antes de que se generalizara el registro civil.</td><td>Varía</td></tr>
+<tr><td><b>Archivos públicos y Archivo Nacional</b></td><td>Inmigración, naturalización, inventarios. El Archivo Nacional conserva listas de pasajeros de barcos que llegaron a Río.</td><td>Gratis</td></tr>
+<tr><td><b>Museu da Imigração (SP)</b></td><td>Registros de la Hospedaria de Imigrantes y listas de pasajeros.</td><td>Gratis</td></tr>
+<tr><td><b>Hemeroteca Digital (Biblioteca Nacional)</b></td><td>Periódicos antiguos: matrimonios, fallecimientos, llegada de barcos.</td><td>Gratis</td></tr>
+<tr><td><b>Portal Antenati</b> (Italia)</td><td>Registros civiles de los archivos estatales italianos.</td><td>Gratis</td></tr>
+<tr><td><b>Digitarq</b> (Portugal)</td><td>Registros parroquiales digitalizados de los archivos distritales.</td><td>Gratis</td></tr>
+<tr><td><b>Partida</b> (Alemania, Austria, Polonia)</td><td>Libros parroquiales católicos.</td><td>Gratis</td></tr>
+<tr><td><b>Prueba de ADN</b> (MyHeritage, Ancestry y otros)</td><td>Compara tu ADN con el de otras personas que se hicieron pruebas e identifica primos reales. Cada empresa compara con su propia base; algunos sitios aceptan el archivo de ADN de otra empresa (carga), lo que amplía la búsqueda. El ADN es un dato sensible: lee la política de privacidad.</td><td>De pago</td></tr>
+</table></div>
+</div></section>
+<section id="conferir"><div class="wrap">
+<span class="chip">Verificar</span>
+<h2>Antes de agregar a alguien al árbol</h2>
+<p class="sub">Pasa a cada persona nueva por esta lista. Si no cumple todos los puntos, queda como HIPÓTESIS.</p>
+<div class="ex">
+<div class="card">
+<h3>✅ Lista de verificación</h3>
+<p>□ ¿Tiene una fuente (enlace al registro o documento)?<br/>□ ¿Abrí el enlace yo mismo y muestra a esa persona?<br/>□ ¿Coinciden el nombre, la fecha y el lugar (incluida la grafía antigua)?<br/>□ ¿La edad de los padres tiene sentido?<br/>□ ¿El registro menciona a padres o cónyuge ya confirmados? <b>Este es el vínculo que distingue a un pariente de un homónimo.</b><br/>□ ¿Hay dos documentos para el vínculo que lleva a la ciudadanía?</p>
+<h3 style="margin-top:18px">🚩 Señales de invención</h3>
+<p>Enlace que no abre o muestra a otra persona · "según registros públicos" sin decir cuáles · fechas demasiado redondas · personas que encajan perfectamente con lo que contaste · la fuente cambia cuando vuelves a preguntar.</p>
+</div>
+<figure><img alt="Árbol de ejemplo generado por el script: confirmados con borde ámbar, hipótesis con líneas discontinuas" loading="lazy" src="../assets/exemplo-arvore.jpg"/><figcaption>Salida de <code>scripts/arvore.py</code> con la familia ficticia de ejemplo: confirmados con borde ámbar, hipótesis con líneas discontinuas. «Luigi» se marcó como confirmado sin fuente y el script lo rebajó.</figcaption></figure>
+</div>
+</div></section>
+<section id="glossario"><div class="wrap">
+<span class="chip">Glosario</span>
+<h2>Las palabras difíciles, en una línea</h2>
+<p class="sub">Para que nadie se quede trabado a mitad de camino.</p>
+<div class="grid g3">
+<div class="card"><h3>Alucinación</h3><p>Cuando la IA inventa algo que parece real: un nombre, una fecha, un registro que no existe.</p></div>
+<div class="card"><h3>Homónimo</h3><p>Una persona distinta con el mismo nombre. El mayor riesgo de la genealogía: encontrar al "José Rossi" equivocado.</p></div>
+<div class="card"><h3>Indexado</h3><p>Registro que puedes encontrar escribiendo el nombre. Si no está indexado, solo aparece la foto del libro: hay que pasar las páginas una por una.</p></div>
+<div class="card"><h3>Registro parroquial</h3><p>Bautismo, matrimonio o defunción anotados en el libro de la iglesia. Antes del registro civil, era el registro principal.</p></div>
+<div class="card"><h3>Copia íntegra</h3><p>Certificado que copia el registro completo del libro del registro civil, con padres, abuelos y anotaciones. Es el que sirve para la ciudadanía.</p></div>
+<div class="card"><h3>Apostilla de La Haya</h3><p>Sello hecho en una notaría que permite que un documento brasileño tenga validez en otro país.</p></div>
+<div class="card"><h3>Traducción jurada</h3><p>Traducción oficial, realizada por un traductor público registrado, exigida en los procesos de ciudadanía.</p></div>
+<div class="card"><h3>CSV</h3><p>Tabla guardada como texto, con columnas separadas por comas. Se abre en Excel y Google Sheets.</p></div>
+<div class="card"><h3>Mermaid y GEDCOM</h3><p>Mermaid es un lenguaje que convierte texto en diagramas. GEDCOM (.ged) es el archivo estándar que permite llevar un árbol de un sitio de genealogía a otro.</p></div>
+</div>
+</div></section>
+<section id="roadmap"><div class="wrap">
+<span class="chip">Tu plan</span>
+<h2>Un mes para un árbol confiable</h2>
+<p class="sub">La genealogía de verdad avanza despacio. Eso es bueno: cada nombre que agregas se queda.</p>
+<div class="phase"><div class="tag">Hoy</div><div class="d"><strong>Entrevista y tabla</strong><span>Prompts 1 y 2. Llama al pariente de más edad y reúne los papeles de la casa.</span></div></div>
+<div class="phase"><div class="tag">Semana 1</div><div class="d"><strong>Documentos</strong><span>Fotografía actas y registros, y transcríbelos con el prompt 3. Crea una cuenta en FamilySearch.</span></div></div>
+<div class="phase"><div class="tag">Semanas 2–3</div><div class="d"><strong>Investigación con pruebas</strong><span>Prompts 4 y 5, una generación a la vez. Cada hallazgo pasa por la lista de verificación.</span></div></div>
+<div class="phase"><div class="tag">Semana 4</div><div class="d"><strong>Árbol y próximos pasos</strong><span>Script del paso 8. Si quieres encontrar parientes desconocidos, considera hacerte una prueba de ADN; si quieres obtener la ciudadanía, usa el prompt 7 y consulta al consulado.</span></div></div>
+</div></section>
+<footer>
+<div class="wrap">
+<div class="pill">Prompts</div><div class="pill">Python 3</div><div class="pill">Mermaid</div>
+<p style="margin-top:18px">Árbol genealógico con IA · contenido abierto y gratuito ·
+      <a href="https://github.com/inematds/arvore-genealogica-ia">inematds/arvore-genealogica-ia</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+  (function(){
+    var KEY='arvore-genealogica-ia-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; }
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      localStorage.setItem(KEY, light?'light':'dark');
+    });
+  })();
+  document.querySelectorAll('.pr').forEach(function(el){
+    var bt=document.createElement('button'); bt.className='cp'; bt.type='button';
+    var ok=bt.dataset.ok='¡Copiado!'; bt.textContent='Copiar prompt';
+    bt.addEventListener('click',function(){
+      var txt=el.innerText;
+      (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(function(){
+        var o=bt.textContent; bt.textContent=ok; setTimeout(function(){bt.textContent=o;},1500);
+      }).catch(function(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);});
+    });
+    el.insertAdjacentElement('afterend',bt);
+  });
+</script>
+</body>
+</html>
