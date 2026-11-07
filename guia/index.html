@@ -80,7 +80,7 @@
   .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
   .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
   .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
-  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre}
   .pr{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-family:"JetBrains Mono",monospace;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap;overflow-wrap:anywhere}
   pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
   .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
@@ -193,7 +193,7 @@
 <div class="grid g3">
 <div class="card"><h3>💬 Um chat de IA</h3><p>ChatGPT, Claude ou Gemini. Para o passo 5, ligue a pesquisa na web do chat (o botão de busca ou o modo agente, quando o seu plano tiver). Para ler documentos, mande a foto pelo clipe de anexo.</p></div>
 <div class="card"><h3>🔎 Conta no FamilySearch</h3><p>Gratuita, com cadastro, em familysearch.org. É o maior acervo grátis de registros, inclusive do Brasil.</p></div>
-<div class="card"><h3>🐍 Python 3 (opcional)</h3><p>Só para o passo 8. No Linux já vem; no Windows e no Mac, instale em python.org. Baixe o projeto pelo botão verde <b>Code → Download ZIP</b> no GitHub e descompacte, ou use o git:</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/arvore-genealogica-ia</span>
+<div class="card"><h3>🐍 Python 3 (opcional)</h3><p>Só para o passo 8. No Linux já vem; no Windows e no Mac, instale em python.org (no Windows, marque <b>Add python.exe to PATH</b> na primeira tela do instalador). Baixe o projeto pelo botão verde <b>Code → Download ZIP</b> no GitHub e descompacte, ou use o git:</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/arvore-genealogica-ia</span>
 <span class="k">cd</span> arvore-genealogica-ia</pre></div>
 </div>
 </div></section>
@@ -214,11 +214,13 @@
 <p>Tudo vira uma tabela com a coluna <code>fonte</code> e a coluna <code>status</code>. É ela que o script desenha no passo 8.</p>
 <div class="pr">Com tudo o que eu te contei, monte uma tabela CSV com estas colunas, nesta ordem:
 id,nome,nascimento,local_nascimento,pai_id,mae_id,fonte,status,nota
+- Ponha entre aspas duplas todo valor que tiver vírgula ("Joinville, SC").
 - id curto e único (p01, p02...). pai_id e mae_id usam esses ids.
 - fonte = link do registro ou o documento. Vazio se não houver.
 - status = CONFIRMADO só se a fonte estiver preenchida; senão HIPOTESE.
+- Relato de parente ("a avó contou") não é fonte: fica HIPOTESE.
 - nota = o que falta para confirmar. Não invente ninguém. Responda só com o CSV.</div>
-<p>CSV é uma tabela em texto, com as colunas separadas por vírgula. Para salvar: copie a resposta, cole no Bloco de Notas (Windows) ou no TextEdit em modo texto simples (Mac) e salve como <code>minha-familia.csv</code> dentro da pasta do projeto. Ou cole no Google Planilhas e baixe como .csv.</p>
+<p>CSV é uma tabela em texto, com as colunas separadas por vírgula. Para salvar: copie a resposta, cole no Bloco de Notas (Windows) ou no TextEdit em modo texto simples (Mac) e salve como <code>minha-familia.csv</code> dentro da pasta do projeto. Ou cole no Google Planilhas e baixe como .csv. No Bloco de Notas, em "Tipo", escolha "Todos os arquivos" (senão vira <code>.csv.txt</code>), e não copie as linhas com <code>```</code> se o chat puser (o script também as ignora). O script aceita vírgula ou ponto e vírgula e o status com ou sem acento.</p>
 </div></div>
 <div class="step"><div class="b">3</div><div>
 <h3>Ler documento antigo (foto)</h3>
@@ -239,7 +241,7 @@ Se não tiver certeza de que um acervo existe, diga "não tenho certeza".</div>
 </div></div>
 <div class="step"><div class="b">5</div><div>
 <h3>Pesquisa com prova (o prompt que trava a alucinação)</h3>
-<p>A versão segura do "ache parentes que eu não tenho". Use num chat que navega na web.</p>
+<p>A versão segura do "ache parentes que eu não tenho". Use num chat que navega na web: no app do ChatGPT, toque no <b>+</b> ao lado da caixa de texto e escolha a busca na web (ou o modo agente, se o seu plano tiver). Os nomes dos botões mudam com as versões do app.</p>
 <div class="pr">Pesquise registros públicos de &lt;NOME COMPLETO&gt;, nascido por volta de &lt;ANO&gt; em &lt;LUGAR&gt;, filho de &lt;PAI&gt; e &lt;MÃE&gt;.
 REGRAS OBRIGATÓRIAS:
 1) Só inclua uma pessoa em CONFIRMADOS se você abriu um registro com NOME + DATA + LOCAL, e me dê o LINK direto do registro e o nome da coleção.
@@ -267,11 +269,16 @@ Não complete nem confirme ninguém sem fonte.
 </div></div>
 <div class="step"><div class="b">8</div><div>
 <h3>Árvore visual só com quem foi confirmado</h3>
-<p>Abra o terminal dentro da pasta do projeto (Windows: PowerShell; Mac: app Terminal; Linux: terminal) e rode o script com a tabela do passo 2. Ele também confere: quem está CONFIRMADO sem fonte vira hipótese, e idades impossíveis de pai ou mãe geram aviso.</p>
-<pre><span class="k">python3</span> scripts/arvore.py minha-familia.csv --saida minha-arvore.html   <span class="c"># abre no navegador</span>
+<p>Abra o terminal dentro da pasta do projeto: no Windows, abra a pasta no Explorador de Arquivos, clique na barra de endereço, digite <code>powershell</code> e aperte Enter; no Mac, clique com o botão direito na pasta → Serviços → Novo Terminal na Pasta; no Linux, botão direito → Abrir no terminal. Depois rode o script com a tabela do passo 2. Ele também confere: quem está CONFIRMADO sem fonte (ou só com o endereço do site) vira hipótese, e idades impossíveis de pai ou mãe geram aviso.</p>
+<pre><span class="c"># Mac e Linux</span>
+<span class="k">python3</span> scripts/arvore.py minha-familia.csv --saida minha-arvore.html   <span class="c"># grava minha-arvore.html</span>
 <span class="k">python3</span> scripts/arvore.py minha-familia.csv --so-confirmados --saida so-provas.html
-<span class="k">python3</span> scripts/arvore.py modelos/pessoas.csv --saida exemplo.html   <span class="c"># família fictícia de exemplo</span></pre>
-<p>O arquivo gerado abre no navegador e precisa de internet para desenhar. Sem computador? Peça ao chat: "desenhe esta tabela em Mermaid, HIPOTESE com borda tracejada, sem acrescentar ninguém" e cole o resultado em mermaid.live para ver o desenho. Para levar a árvore a um site de genealogia, use o formato GEDCOM (.ged).</p>
+<span class="k">python3</span> scripts/arvore.py modelos/pessoas.csv --saida exemplo.html   <span class="c"># família fictícia de exemplo</span>
+<span class="c"># Windows (PowerShell)</span>
+<span class="k">py</span> scripts\arvore.py minha-familia.csv --saida minha-arvore.html
+<span class="k">py</span> scripts\arvore.py minha-familia.csv --so-confirmados --saida so-provas.html
+<span class="k">py</span> scripts\arvore.py modelos\pessoas.csv --saida exemplo.html</pre>
+<p>O script só grava o arquivo: dê dois cliques em <code>minha-arvore.html</code> na pasta para abrir no navegador (precisa de internet para desenhar). Sem computador? Peça ao chat: "desenhe esta tabela em Mermaid, HIPOTESE com borda tracejada, sem acrescentar ninguém" e cole o resultado em mermaid.live para ver o desenho. Para levar a árvore a um site de genealogia, o formato padrão é o GEDCOM (.ged): monte a árvore direto no FamilySearch ou no MyHeritage, ou peça ao chat para converter a tabela em GEDCOM e importe no site.</p>
 </div></div>
 </div></section>
 <section id="onde"><div class="wrap">
@@ -289,6 +296,7 @@ Não complete nem confirme ninguém sem fonte.
 <tr><td><b>Portal Antenati</b> (Itália)</td><td>Registros civis dos arquivos de Estado italianos.</td><td>Grátis</td></tr>
 <tr><td><b>Digitarq</b> (Portugal)</td><td>Registros paroquiais digitalizados dos arquivos distritais.</td><td>Grátis</td></tr>
 <tr><td><b>Matricula</b> (Alemanha, Áustria, Polônia)</td><td>Livros paroquiais católicos.</td><td>Grátis</td></tr>
+<tr><td><b>Szukaj w Archiwach</b> e <b>Geneteka</b> (Polônia)</td><td>Arquivos estatais poloneses digitalizados e índice de registros paroquiais e civis feito por voluntários.</td><td>Grátis</td></tr>
 <tr><td><b>Teste de DNA</b> (MyHeritage, Ancestry e outros)</td><td>Compara seu DNA com o de outras pessoas testadas e aponta primos reais. Cada empresa compara com a própria base; alguns sites aceitam o arquivo de DNA de outra empresa (upload), o que amplia a busca. DNA é dado sensível: leia a política de privacidade.</td><td>Pago</td></tr>
 </table></div>
 </div></section>

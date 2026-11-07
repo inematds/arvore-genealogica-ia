@@ -1,0 +1,9 @@
+id,nombre,nacimiento,lugar_nacimiento,padre_id,madre_id,fuente,estado,nota
+p01,Ana Ejemplo Rossi,1985,"Caxias do Sul, Brasil",p02,p03,partida de nacimiento (original en casa),CONFIRMADO,familia ficticia de ejemplo
+p02,Carlos Rossi,1955,"Caxias do Sul, Brasil",p04,p05,acta de matrimonio de los padres (registro civil de Caxias),CONFIRMADO,
+p03,María Ejemplo,1958,"Bento Gonçalves, Brasil",,,,HIPÓTESIS,falta la partida de nacimiento
+p04,Giuseppe Rossi,1921,"Caxias do Sul, Brasil",p06,,"bautismo, Parroquia Santa Teresa, Caxias do Sul, libro 12, folio 34 (foto en casa)",CONFIRMADO,
+p05,Teresa Bianchi,1925,"Flores da Cunha, Brasil",,,,HIPÓTESIS,nombre contado por la abuela
+p06,Antonio Rossi,1890,"Véneto, Italia",,,,HIPÓTESIS,"lo sugirió un chat de IA; sin registro. Buscar en el Portal Antenati"
+p07,Luigi Rossi,1880,"Véneto, Italia",,,,CONFIRMADO,"la IA dijo 'hermano de Antonio' sin fuente: el script lo baja"
+p08,Pietro Rossi,1860,"Véneto, Italia",,,https://www.familysearch.org/,CONFIRMADO,"la fuente es solo el sitio, no un registro: el script lo baja"

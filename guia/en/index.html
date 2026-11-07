@@ -80,7 +80,7 @@
   .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
   .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
   .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
-  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre}
   .pr{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-family:"JetBrains Mono",monospace;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap;overflow-wrap:anywhere}
   pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
   .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
@@ -150,7 +150,7 @@
 <section class="resumo" id="resumo"><div class="wrap">
 <span class="chip">In short</span>
 <p>This is a free guide to building your family tree using an AI chat (ChatGPT, Claude, Gemini) the right way. It explains what the viral video “ChatGPT finds your relatives” gets right and where AI makes people up. It includes 8 ready-to-use prompts that require AI to show its proof, a list of archives where you can do real research, and a checklist for verifying every name. All you need is an AI chat and, if you want a visual family tree, Python 3.</p>
-<div class="regra" style="font-size:1rem">📱 Only use chat on your phone? Steps 1 through 7 are enough. Step 8 (drawing the tree with the script) is optional and requires a computer, or you can ask the chat itself to draw it.</div>
+<div class="regra" style="font-size:1rem">📱 Only using the chat on your phone? Steps 1 through 7 are enough. Step 8 (drawing the tree with the script) is optional and requires a computer, or you can ask the chat itself to draw it.</div>
 </div></section>
 <section id="oque"><div class="wrap">
 <span class="chip">Myth × truth</span>
@@ -159,9 +159,9 @@
 <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img alt="Myth vs. fact, prompts that work, where to research, how to verify each name, DNA testing, and citizenship" loading="lazy" src="../assets/banner-grade-en.jpg" style="width:100%;display:block"/></figure>
 <div class="tblw"><table class="tbl">
 <tr><th>Promise</th><th>Does it work?</th><th>Why</th></tr>
-<tr><td>1. "Ask me everything and build my initial family tree"</td><td class="v ok">✅ Yes</td><td>AI only organizes what <b>you</b> counted. There's nothing to make up.</td></tr>
+<tr><td>1. "Ask me everything and build my initial family tree"</td><td class="v ok">✅ Yes</td><td>AI only organizes what <b>you</b> told it. There's nothing to make up.</td></tr>
 <tr><td>2. "Tell the story of my family line based on my surname"</td><td class="v meio">⚠️ Half-truth</td><td>The origin of the surname is generic. <b>Having the same last name doesn’t mean you’re in the same family.</b></td></tr>
-<tr><td>3. "Research records and find relatives I don’t know about"</td><td class="v nao">❌ Makes things up</td><td>Good databases require a login or are paid, and many Brazilian records aren’t indexed online. With common names, AI mixes up people with the same name and <b>fills in the gaps with plausible people</b>. "Names you’ve never heard of" are exactly the danger.</td></tr>
+<tr><td>3. "Research records and find relatives I don’t know about"</td><td class="v nao">❌ Makes things up</td><td>Good databases require a login or are paid, and many records (in Brazil and across Latin America) aren’t indexed online. With common names, AI mixes up people with the same name and <b>fills in the gaps with plausible people</b>. "Names you’ve never heard of" are exactly the danger.</td></tr>
 <tr><td>4. "Build the complete visual family tree"</td><td class="v ok">✅ Draws</td><td>But the diagram doesn’t make the names from step 3 true.</td></tr>
 <tr><td>+ "You’re going to find a citizenship"</td><td class="v nao">❌ Exaggeration</td><td>Citizenship is proven with <b>certificates</b>. And the rules have gotten stricter: Italy limited citizenship by descent in 2025 (Law 74/2025), and Portugal changed its nationality law in 2025–2026, with parts challenged in the Constitutional Court. Information verified in November 2026: confirm with the consulate.</td></tr>
 </table></div>
@@ -193,7 +193,7 @@
 <div class="grid g3">
 <div class="card"><h3>💬 An AI chat</h3><p>ChatGPT, Claude, or Gemini. For step 5, turn on web search in the chat (the search button or agent mode, if your plan includes it). To read documents, send the photo using the attachment clip.</p></div>
 <div class="card"><h3>🔎 FamilySearch account</h3><p>Free, with registration, at familysearch.org. It’s the largest free collection of records, including records from Brazil.</p></div>
-<div class="card"><h3>🐍 Python 3 (optional)</h3><p>Only for step 8. It comes with Linux; on Windows and Mac, install it from python.org. Download the project using the green button <b>Code → Download ZIP</b> on GitHub and unzip it, or use git:</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/arvore-genealogica-ia</span>
+<div class="card"><h3>🐍 Python 3 (optional)</h3><p>Only for step 8. It comes with Linux; on Windows and Mac, install it from python.org (on Windows, tick <b>Add python.exe to PATH</b> on the installer's first screen). Download the project using the green button <b>Code → Download ZIP</b> on GitHub and unzip it, or use git:</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/arvore-genealogica-ia</span>
 <span class="k">cd</span> arvore-genealogica-ia</pre></div>
 </div>
 </div></section>
@@ -201,45 +201,48 @@
 <span class="chip">Step by step · 8 prompts</span>
 <h2>Copy, paste, and replace what’s between &lt; &gt;</h2>
 <p class="sub">The prompts are also in the folder <code>prompts/</code> from the repository. They all follow the same rule: without proof, it doesn't go in.</p>
+<p class="sub" style="margin-top:-1.2em">The files in the <code>prompts/</code> and <code>docs/</code> folders are in Portuguese; every prompt and every list is translated on this page.</p>
 <div class="step"><div class="b">1</div><div>
 <h3>Family interview</h3>
 <p>Start with living relatives. AI asks the questions and prepares a guide for you to talk with your oldest relative.</p>
 <div class="pr">I want to build my family tree, starting with what my relatives and I know.
-1) Ask me questions ONE AT A TIME: my full name, date and place of birth, and the same for my parents, grandparents, and great-grandparents. Also ask about nicknames, occupation, religion, where they came from, and when they arrived in Brazil.
+1) Ask me questions ONE AT A TIME: my full name, date and place of birth, and the same for my parents, grandparents, and great-grandparents. Also ask about nicknames, occupation, religion, where they came from, and when they arrived in this country.
 2) Then put together a list of 15 questions for me to ask my oldest relative.
 3) Rule: DO NOT add any person, date, or place that I haven’t mentioned. When something is missing, write "I don’t know" and say which document could confirm it.</div>
 </div></div>
 <div class="step"><div class="b">2</div><div>
 <h3>Organize it in a table</h3>
-<p>Everything becomes a table with the column <code>fonte</code> and the column <code>status</code>. It’s the one the script draws in step 8.</p>
+<p>Everything becomes a table with a <code>source</code> column and a <code>status</code> column. It’s the one the script draws in step 8.</p>
 <div class="pr">Based on everything I’ve told you, create a CSV table with these columns, in this order:
 id,name,birth,place_of_birth,father_id,mother_id,source,status,note
+- Put any value that contains a comma in double quotes ("Joinville, SC").
 - Short, unique id (p01, p02...). father_id and mother_id use these ids.
 - source = link to the record or the document. Leave blank if there isn’t one.
 - status = CONFIRMED only if the source is filled in; otherwise HYPOTHESIS.
+- A relative’s story ("grandma told me") is not a source: it stays HYPOTHESIS.
 - note = what’s missing for confirmation. Don’t make anyone up. Respond with only the CSV.</div>
-<p>CSV is a text table with columns separated by commas. To save it: copy the response, paste it into Notepad (Windows) or TextEdit in plain text mode (Mac), and save it as <code>minha-familia.csv</code> inside the project folder. Or paste it into Google Sheets and download it as .csv.</p>
+<p>CSV is a text table with columns separated by commas. To save it: copy the response, paste it into Notepad (Windows) or TextEdit in plain text mode (Mac), and save it as <code>my-family.csv</code> inside the project folder. Or paste it into Google Sheets and download it as .csv. In Notepad, under "Save as type", choose "All files" (otherwise it becomes <code>.csv.txt</code>), and leave out the <code>```</code> lines if the chat adds them (the script ignores them too). The script accepts commas or semicolons.</p>
 </div></div>
 <div class="step"><div class="b">3</div><div>
 <h3>Read an old document (photo)</h3>
 <p>AI is excellent at this: difficult handwriting, Latin, Italian, German. You verify it against the image.</p>
 <div class="pr">This is a photo of an old record from my family.
 1) Transcribe it exactly as written, line by line. Where you can’t read it, write [illegible] — don’t guess.
-2) Translate it into Portuguese.
+2) Translate it into English.
 3) List: names, dates, places, parents, godparents/witnesses, occupation, and the book/page/entry number.
 Mark every uncertain reading with (?).</div>
 </div></div>
 <div class="step"><div class="b">4</div><div>
 <h3>Where to look</h3>
 <p>AI suggests archives and registry offices. Open each link before you trust it.</p>
-<div class="pr">My great-grandfather &lt;NAME&gt;, born around &lt;YEAR&gt; in &lt;CITY, COUNTRY&gt;, arrived in Brazil around &lt;YEAR&gt; and lived in &lt;CITY, STATE&gt;.
+<div class="pr">My great-grandfather &lt;NAME&gt;, born around &lt;YEAR&gt; in &lt;CITY, COUNTRY&gt;, arrived in &lt;COUNTRY&gt; around &lt;YEAR&gt; and lived in &lt;CITY, STATE&gt;.
 List where to look for his records, in order of likelihood of success: online collections (OFFICIAL link and exact collection name), likely civil registry offices or parishes, immigration archives.
 For each one: type of record, whether it’s free, and whether it has name search or images only.
 If you’re not sure a collection exists, say “I’m not sure.”</div>
 </div></div>
 <div class="step"><div class="b">5</div><div>
 <h3>Research backed by evidence (the prompt that stops hallucinations)</h3>
-<p>The safe version of "find relatives I don’t know about." Use it in a chat that can browse the web.</p>
+<p>The safe version of "find relatives I don’t know about." Use it in a chat that can browse the web: in the ChatGPT app, tap the <b>+</b> next to the text box and choose web search (or agent mode, if your plan includes it). Button names change between app versions.</p>
 <div class="pr">Search public records for &lt;FULL NAME&gt;, born around &lt;YEAR&gt; in &lt;PLACE&gt;, child of &lt;FATHER&gt; and &lt;MOTHER&gt;.
 REQUIRED RULES:
 1) Only include someone under CONFIRMED if you opened a record with NAME + DATE + PLACE, and give me the DIRECT LINK to the record and the collection name.
@@ -250,7 +253,7 @@ REQUIRED RULES:
 </div></div>
 <div class="step"><div class="b">6</div><div>
 <h3>Auditing an answer you already got</h3>
-<p>Already have a list that AI “found”? Open a chat <b>new</b> (without the history) and ask for an audit.</p>
+<p>Already have a list that AI “found”? Open a <b>new</b> chat (without the history) and ask for an audit.</p>
 <div class="pr">Below is a list of relatives that an AI chat said it found in "public records." I do NOT trust it.
 For each person: say whether there’s a verifiable source (direct link, collection, book/page); classify as SOURCE TO CHECK or NO SOURCE (likely made up); point out inconsistencies (ages, dates, places, people with the same name).
 Don’t add or confirm anyone without a source.
@@ -258,20 +261,25 @@ Don’t add or confirm anyone without a source.
 </div></div>
 <div class="step"><div class="b">7</div><div>
 <h3>Citizenship: the document checklist</h3>
-<p>AI organizes the process; the law and the consulate make the decision. Ask for the date of the information. The prompt terms (long-form certificate, Hague Apostille, sworn translation) are in the <a href="#glossario">glossary</a>.</p>
+<p>AI organizes the process; the law and the consulate make the decision. Ask for the date of the information. The prompt terms (full-text certificate, Hague Apostille, sworn translation) are in the <a href="#glossario">glossary</a>.</p>
 <div class="pr">My ancestor &lt;NAME&gt;, born in &lt;YEAR&gt; in &lt;CITY, COUNTRY&gt;, is my &lt;great-grandfather/grandfather&gt;. The line down to me is: &lt;he&gt; → &lt;child&gt; → &lt;grandchild&gt; → me.
 1) List the certificates normally requested to prove this line, for each generation, and where each one comes from.
-2) Tell me which ones usually need a full record, an apostille of The Hague, and a sworn translation.
+2) Tell me which ones usually need a full-text certificate, a Hague Apostille, and a sworn translation.
 3) Explain, with the DATE of your information, what I need to verify in the current law of &lt;COUNTRY&gt;, and give me the official consulate website link.
 4) Don’t tell me I “have a right”; tell me what I need to verify.</div>
 </div></div>
 <div class="step"><div class="b">8</div><div>
 <h3>Visual tree with confirmed people only</h3>
-<p>Open a terminal in the project folder (Windows: PowerShell; Mac: Terminal app; Linux: terminal) and run the script with the table from step 2. It also checks that anyone marked CONFIRMED without a source becomes a hypothesis, and flags impossible ages for a father or mother.</p>
-<pre><span class="k">python3</span> scripts/arvore.py minha-familia.csv --saida minha-arvore.html   <span class="c"># opens in the browser</span>
-<span class="k">python3</span> scripts/arvore.py minha-familia.csv --so-confirmados --saida so-provas.html
-<span class="k">python3</span> scripts/arvore.py modelos/pessoas.csv --saida exemplo.html   <span class="c"># fictional example family</span></pre>
-<p>The generated file opens in your browser and needs an internet connection to render. No computer? Ask the chat: "draw this table in Mermaid, HYPOTHESIS with a dashed border, without adding anyone" and paste the result into mermaid.live to see the drawing. To move the tree to a genealogy website, use the GEDCOM (.ged) format.</p>
+<p>Open a terminal in the project folder: on Windows, open the folder in File Explorer, click the address bar, type <code>powershell</code> and press Enter; on Mac, right-click the folder → Services → New Terminal at Folder; on Linux, right-click → Open in terminal. Then run the script with the table from step 2. It also checks that anyone marked CONFIRMED without a source (or with only the website address) becomes a hypothesis, and flags impossible ages for a father or mother. The script reads the English columns from step 2 and answers in English.</p>
+<pre><span class="c"># Mac and Linux</span>
+<span class="k">python3</span> scripts/arvore.py my-family.csv --output my-tree.html   <span class="c"># saves my-tree.html</span>
+<span class="k">python3</span> scripts/arvore.py my-family.csv --only-confirmed --output only-proof.html
+<span class="k">python3</span> scripts/arvore.py modelos/people.csv --output example.html   <span class="c"># fictional example family</span>
+<span class="c"># Windows (PowerShell)</span>
+<span class="k">py</span> scripts\arvore.py my-family.csv --output my-tree.html
+<span class="k">py</span> scripts\arvore.py my-family.csv --only-confirmed --output only-proof.html
+<span class="k">py</span> scripts\arvore.py modelos\people.csv --output example.html</pre>
+<p>The script only saves the file: double-click <code>my-tree.html</code> in the folder to open it in your browser (it needs an internet connection to render). No computer? Ask the chat: "draw this table in Mermaid, HYPOTHESIS with a dashed border, without adding anyone" and paste the result into mermaid.live to see the drawing. To move the tree to a genealogy website, the standard format is GEDCOM (.ged): build the tree directly on FamilySearch or MyHeritage, or ask the chat to convert the table to GEDCOM and import it on the site.</p>
 </div></div>
 </div></section>
 <section id="onde"><div class="wrap">
@@ -279,16 +287,19 @@ Don’t add or confirm anyone without a source.
 <h2>The archives AI won’t access for you</h2>
 <p class="sub">Start at home: certificates, work records, passports, letters, and photos with notes on the back. Then check these archives.</p>
 <div class="tblw"><table class="tbl">
-<tr><th>Where</th><th>What you need</th><th>Cost</th></tr>
+<tr><th>Where</th><th>What it has</th><th>Cost</th></tr>
 <tr><td><b>FamilySearch</b> (familysearch.org)</td><td>Civil and parish records from several states in Brazil and around the world. Many are only available as images, with no name search, so you have to browse through them.</td><td>Free</td></tr>
-<tr><td><b>Civil registry office</b></td><td>The certificate of <b>full text</b> (a faithful copy of the book) is the one that counts for citizenship. Request it at the registry office or online.</td><td>Paid</td></tr>
+<tr><td><b>Civil registry office</b> (Brazil: <i>cartório</i>)</td><td>The <b>full-text certificate</b> (<i>inteiro teor</i>, a faithful copy of the book) is the one that counts for citizenship. Request it at the registry office or online.</td><td>Paid</td></tr>
 <tr><td><b>Parishes and diocesan offices</b></td><td>Baptisms, marriages, and deaths from before civil registration became widespread.</td><td>Varies</td></tr>
-<tr><td><b>Public records and the National Archives</b></td><td>Immigration, naturalization, probate records. The National Archives holds passenger lists for ships that arrived in Rio.</td><td>Free</td></tr>
-<tr><td><b>Immigration Museum (SP)</b></td><td>Records from the Immigrant Inn and passenger lists.</td><td>Free</td></tr>
-<tr><td><b>Digital Newspaper Archive (National Library)</b></td><td>Old newspapers: marriages, deaths, ship arrivals.</td><td>Free</td></tr>
+<tr><td><b>State archives and the National Archives</b> (Brazil)</td><td>Immigration, naturalization, probate records. The National Archives holds passenger lists for ships that arrived in Rio.</td><td>Free</td></tr>
+<tr><td><b>Museu da Imigração</b> (São Paulo, Brazil)</td><td>Records of the immigrant hostel (Hospedaria de Imigrantes) and passenger lists.</td><td>Free</td></tr>
+<tr><td><b>United States</b>: NARA, Ellis Island passenger search, state vital records offices</td><td>National Archives (census, naturalization, ship lists), the Statue of Liberty–Ellis Island Foundation passenger database (arrivals in New York), and each state’s vital records office for birth, marriage and death certificates.</td><td>Mostly free</td></tr>
+<tr><td><b>Your country’s civil registry and national archive</b></td><td>The list above is strongest for Brazil. In any country, the civil registry and the national archive hold births, marriages, deaths and immigration. Ask the chat for your country’s list with prompt 4 and open every link.</td><td>Varies</td></tr>
+<tr><td><b>Hemeroteca Digital (Brazil’s National Library)</b></td><td>Old newspapers: marriages, deaths, ship arrivals.</td><td>Free</td></tr>
 <tr><td><b>Antenati Portal</b> (Italy)</td><td>Civil records from Italian state archives.</td><td>Free</td></tr>
 <tr><td><b>Digitarq</b> (Portugal)</td><td>Digitized parish records from district archives.</td><td>Free</td></tr>
-<tr><td><b>Registration</b> (Germany, Austria, Poland)</td><td>Catholic parish registers.</td><td>Free</td></tr>
+<tr><td><b>Matricula</b> (Germany, Austria, Poland)</td><td>Catholic parish registers.</td><td>Free</td></tr>
+<tr><td><b>Szukaj w Archiwach</b> and <b>Geneteka</b> (Poland)</td><td>Digitized Polish state archives and a volunteer-built index of parish and civil records.</td><td>Free</td></tr>
 <tr><td><b>DNA test</b> (MyHeritage, Ancestry, and others)</td><td>Compare your DNA with that of other people who have been tested and find real cousins. Each company compares results against its own database; some sites accept DNA files from another company (upload), which broadens the search. DNA is sensitive data: read the privacy policy.</td><td>Paid</td></tr>
 </table></div>
 </div></section>
@@ -303,7 +314,7 @@ Don’t add or confirm anyone without a source.
 <h3 style="margin-top:18px">🚩 Signs of fabrication</h3>
 <p>A link that doesn’t open or shows someone else · “according to public records” without saying which ones · dates that are too round · people who fit your story perfectly · the source changes when you ask again.</p>
 </div>
-<figure><img alt="Example tree generated by the script: confirmed people have amber borders, hypotheses have dashed borders" loading="lazy" src="../assets/exemplo-arvore.jpg"/><figcaption>Output from <code>scripts/arvore.py</code> with the fictional example family: confirmed people have amber borders, hypotheses have dashed borders. "Luigi" was marked as confirmed without a source, and the script downgraded him.</figcaption></figure>
+<figure><img alt="Example tree generated by the script: confirmed people have amber borders, hypotheses have dashed borders" loading="lazy" src="../assets/exemplo-arvore-en.jpg"/><figcaption>Output from <code>scripts/arvore.py</code> with the fictional example family: confirmed people have amber borders, hypotheses have dashed borders. "Luigi" was marked as confirmed without a source, and the script downgraded him.</figcaption></figure>
 </div>
 </div></section>
 <section id="glossario"><div class="wrap">
@@ -315,9 +326,9 @@ Don’t add or confirm anyone without a source.
 <div class="card"><h3>Person with the same name</h3><p>A different person with the same name. The biggest risk in genealogy: finding the wrong "José Rossi."</p></div>
 <div class="card"><h3>Indexed</h3><p>A record you can find by typing in a name. Not indexed = only a photo of the book, so you have to browse page by page.</p></div>
 <div class="card"><h3>Parish record</h3><p>A baptism, marriage, or death recorded in the church book. Before civil registry offices, it was the main record.</p></div>
-<div class="card"><h3>Full record</h3><p>A certificate that copies the complete record from the registry office book, including parents, grandparents, and notes. It’s the one that counts for citizenship.</p></div>
-<div class="card"><h3>Hague Apostille</h3><p>A seal made by a notary that makes a Brazilian document valid in another country.</p></div>
-<div class="card"><h3>Certified translation</h3><p>Official translation, done by a registered public translator, required for citizenship applications.</p></div>
+<div class="card"><h3>Full-text certificate</h3><p>A certificate that copies the complete record from the registry office book, including parents, grandparents, and notes. It’s the one that counts for citizenship.</p></div>
+<div class="card"><h3>Hague Apostille</h3><p>A certificate added by an authorized office that makes a document from one country valid in another (in Brazil, a notary; in the US, the Secretary of State of the state that issued the document).</p></div>
+<div class="card"><h3>Sworn translation</h3><p>Official translation, done by a registered public translator, required for citizenship applications.</p></div>
 <div class="card"><h3>CSV</h3><p>Table saved as text, with columns separated by commas. Opens in Excel and Google Sheets.</p></div>
 <div class="card"><h3>Mermaid and GEDCOM</h3><p>Mermaid is a language that turns text into a diagram. GEDCOM (.ged) is the standard file format for moving a family tree from one genealogy site to another.</p></div>
 </div>

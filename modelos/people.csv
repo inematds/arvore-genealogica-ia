@@ -1,0 +1,9 @@
+id,name,birth,place_of_birth,father_id,mother_id,source,status,note
+p01,Ana Example Rossi,1985,"Caxias do Sul, Brazil",p02,p03,birth certificate (original at home),CONFIRMED,fictional example family
+p02,Carlos Rossi,1955,"Caxias do Sul, Brazil",p04,p05,parents' marriage certificate (Caxias registry office),CONFIRMED,
+p03,Maria Example,1958,"Bento Gonçalves, Brazil",,,,HYPOTHESIS,missing birth certificate
+p04,Giuseppe Rossi,1921,"Caxias do Sul, Brazil",p06,,"baptism, Santa Teresa Parish, Caxias do Sul, book 12, page 34 (photo at home)",CONFIRMED,
+p05,Teresa Bianchi,1925,"Flores da Cunha, Brazil",,,,HYPOTHESIS,name told by grandmother
+p06,Antonio Rossi,1890,"Veneto, Italy",,,,HYPOTHESIS,"AI chat suggested it; no record. Search the Antenati portal"
+p07,Luigi Rossi,1880,"Veneto, Italy",,,,CONFIRMED,"the AI said 'Antonio's brother' with no source: the script downgrades it"
+p08,Pietro Rossi,1860,"Veneto, Italy",,,https://www.familysearch.org/,CONFIRMED,"the source is just the website, not a record: the script downgrades it"

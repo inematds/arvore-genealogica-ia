@@ -50,7 +50,8 @@ git clone https://github.com/inematds/arvore-genealogica-ia
 cd arvore-genealogica-ia
 python3 scripts/arvore.py modelos/pessoas.csv --saida exemplo.html        # família fictícia
 python3 scripts/arvore.py minha-familia.csv --so-confirmados --saida so-provas.html
-python3 -m unittest discover tests                                        # 9 testes
+python3 -m unittest discover tests                                        # 15 testes
+py scripts\arvore.py minha-familia.csv --saida minha-arvore.html      # Windows (PowerShell)
 ```
 
 O script não tem dependências (só Python 3); o HTML gerado precisa de internet para desenhar. Ele avisa quando:

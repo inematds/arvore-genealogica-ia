@@ -25,6 +25,7 @@ A IA ajuda a dizer **onde procurar** e a **ler** o que você achou. A busca é s
 | Itália | **Portal Antenati** (antenati.cultura.gov.it) | Registros civis dos arquivos de Estado italianos, em imagem. |
 | Portugal | **Digitarq** e arquivos distritais (digitarq.arquivos.pt) | Registros paroquiais digitalizados. |
 | Alemanha / Áustria / Polônia | **Matricula** (data.matricula-online.eu) | Livros paroquiais (católicos). |
+| Polônia | **Szukaj w Archiwach** (szukajwarchiwach.gov.pl) e **Geneteka** (geneteka.genealodzy.pl) | Arquivos estatais digitalizados e índice de registros feito por voluntários. |
 | Espanha | **PARES** (pares.mcu.es) | Arquivos estatais espanhóis. |
 
 > Os endereços mudam. Se um link não abrir, pesquise o nome do acervo. Peça à IA: "liste acervos de registros paroquiais de <cidade, país>, com o link oficial", e **abra cada link** antes de confiar.

@@ -80,7 +80,7 @@
   .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
   .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
   .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
-  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre}
   .pr{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-family:"JetBrains Mono",monospace;font-size:.86rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap;overflow-wrap:anywhere}
   pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
   .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
@@ -159,9 +159,9 @@
 <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img alt="Mito × verdad, prompts que funcionan, dónde investigar, verificar cada nombre, prueba de ADN y ciudadanía" loading="lazy" src="../assets/banner-grade-es.jpg" style="width:100%;display:block"/></figure>
 <div class="tblw"><table class="tbl">
 <tr><th>Promesa</th><th>¿Funciona?</th><th>Por qué</th></tr>
-<tr><td>1. "Pregúntame todo y arma mi árbol inicial"</td><td class="v ok">✅ Sí</td><td>La IA solo organiza lo que <b>tú</b> contó. No hay nada que inventar.</td></tr>
+<tr><td>1. "Pregúntame todo y arma mi árbol inicial"</td><td class="v ok">✅ Sí</td><td>La IA solo organiza lo que <b>tú</b> contaste. No hay nada que inventar.</td></tr>
 <tr><td>2. "Cuenta la historia de mi linaje a partir del apellido"</td><td class="v meio">⚠️ Media verdad</td><td>El origen del apellido es genérico. <b>Compartir apellido no significa pertenecer a la misma familia.</b></td></tr>
-<tr><td>3. "Investiga registros y encuentra parientes que no tengo"</td><td class="v nao">❌ Inventa</td><td>Las buenas bases de datos requieren iniciar sesión o son de pago, y muchos registros brasileños no están indexados en internet. Con nombres comunes, la IA mezcla homónimos (personas diferentes con el mismo nombre) y <b>rellena los huecos con personas plausibles</b>. "Nombres que nunca has oído" es justamente el peligro.</td></tr>
+<tr><td>3. "Investiga registros y encuentra parientes que no tengo"</td><td class="v nao">❌ Inventa</td><td>Las buenas bases de datos requieren iniciar sesión o son de pago, y muchos registros (en Brasil y en América Latina) no están indexados en internet. Con nombres comunes, la IA mezcla homónimos (personas diferentes con el mismo nombre) y <b>rellena los huecos con personas plausibles</b>. "Nombres que nunca has oído" es justamente el peligro.</td></tr>
 <tr><td>4. "Arma el árbol visual completo"</td><td class="v ok">✅ Dibuja</td><td>Pero el dibujo no hace que los nombres del paso 3 sean verdaderos.</td></tr>
 <tr><td>+ "Vas a encontrar una ciudadanía"</td><td class="v nao">❌ Exageración</td><td>La ciudadanía se demuestra con <b>certificados</b>. Y las reglas se endurecieron: Italia limitó la ciudadanía por descendencia en 2025 (Ley 74/2025), y Portugal cambió la ley de nacionalidad en 2025–2026, con partes cuestionadas ante el Tribunal Constitucional. Información verificada en noviembre de 2026: confirma en el consulado.</td></tr>
 </table></div>
@@ -193,7 +193,7 @@
 <div class="grid g3">
 <div class="card"><h3>💬 Un chat de IA</h3><p>ChatGPT, Claude o Gemini. Para el paso 5, activa la búsqueda web del chat (el botón de búsqueda o el modo agente, si tu plan lo incluye). Para leer documentos, envía la foto con el ícono de adjuntar.</p></div>
 <div class="card"><h3>🔎 Cuenta en FamilySearch</h3><p>Gratis, con registro, en familysearch.org. Es el mayor archivo gratuito de registros, incluidos los de Brasil.</p></div>
-<div class="card"><h3>🐍 Python 3 (opcional)</h3><p>Solo para el paso 8. En Linux ya viene instalado; en Windows y Mac, instálalo desde python.org. Descarga el proyecto con el botón verde <b>Code → Download ZIP</b> en GitHub y descomprímelo, o usa git:</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/arvore-genealogica-ia</span>
+<div class="card"><h3>🐍 Python 3 (opcional)</h3><p>Solo para el paso 8. En Linux ya viene instalado; en Windows y Mac, instálalo desde python.org (en Windows, marca <b>Add python.exe to PATH</b> en la primera pantalla del instalador). Descarga el proyecto con el botón verde <b>Code → Download ZIP</b> en GitHub y descomprímelo, o usa git:</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/arvore-genealogica-ia</span>
 <span class="k">cd</span> arvore-genealogica-ia</pre></div>
 </div>
 </div></section>
@@ -201,45 +201,48 @@
 <span class="chip">Paso a paso · 8 prompts</span>
 <h2>Copia, pega y reemplaza lo que está entre &lt; &gt;</h2>
 <p class="sub">Los prompts también están en la carpeta <code>prompts/</code> del repositorio. Todos siguen la misma regla: sin pruebas, no se incluye.</p>
+<p class="sub" style="margin-top:-1.2em">Los archivos de las carpetas <code>prompts/</code> y <code>docs/</code> están en portugués; todos los prompts y listas están traducidos en esta página.</p>
 <div class="step"><div class="b">1</div><div>
 <h3>Entrevista familiar</h3>
 <p>Empieza por las personas vivas. La IA hace las preguntas y prepara la guía para que converses con el pariente de más edad.</p>
 <div class="pr">Quiero armar el árbol genealógico de mi familia empezando por lo que mis parientes y yo sabemos.
-1) Hazme preguntas, UNA A LA VEZ: mi nombre completo, fecha y lugar de nacimiento, y lo mismo sobre mis padres, abuelos y bisabuelos. Pregunta también por apodos, profesión, religión, de dónde vinieron y cuándo llegaron a Brasil.
+1) Hazme preguntas, UNA A LA VEZ: mi nombre completo, fecha y lugar de nacimiento, y lo mismo sobre mis padres, abuelos y bisabuelos. Pregunta también por apodos, profesión, religión, de dónde vinieron y cuándo llegaron al país.
 2) Después, arma una guía de 15 preguntas para hacerle a mi pariente de más edad.
 3) Regla: NO agregues ninguna persona, fecha ni lugar que yo no haya mencionado. Cuando falte algo, escribe "no sé" y di qué documento podría confirmarlo.</div>
 </div></div>
 <div class="step"><div class="b">2</div><div>
 <h3>Organizar en una tabla</h3>
-<p>Todo se convierte en una tabla con la columna <code>fonte</code> y la columna <code>status</code>. Es esa la que el script dibuja en el paso 8.</p>
+<p>Todo se convierte en una tabla con la columna <code>fuente</code> y la columna <code>estado</code>. Es esa la que el script dibuja en el paso 8.</p>
 <div class="pr">Con todo lo que te conté, arma una tabla CSV con estas columnas, en este orden:
-id,nome,nascimento,local_nascimento,pai_id,mae_id,fonte,status,nota
-- id corto y único (p01, p02...). pai_id y mae_id usan esos ids.
-- fonte = enlace del registro o el documento. Vacío si no hay.
-- status = CONFIRMADO solo si la fuente está completada; de lo contrario, HIPOTESE.
+id,nombre,nacimiento,lugar_nacimiento,padre_id,madre_id,fuente,estado,nota
+- Pon entre comillas dobles todo valor que tenga coma ("Joinville, SC").
+- id corto y único (p01, p02...). padre_id y madre_id usan esos ids.
+- fuente = enlace del registro o el documento. Vacío si no hay.
+- estado = CONFIRMADO solo si la fuente está completada; de lo contrario, HIPÓTESIS.
+- Lo que contó un pariente ("lo dijo la abuela") no es fuente: queda HIPÓTESIS.
 - nota = qué falta para confirmar. No inventes a nadie. Responde solo con el CSV.</div>
-<p>CSV es una tabla de texto, con las columnas separadas por comas. Para guardarla: copia la respuesta, pégala en el Bloc de notas (Windows) o en TextEdit en modo de texto sin formato (Mac) y guárdala como <code>minha-familia.csv</code> dentro de la carpeta del proyecto. O pégalo en Google Sheets y descárgalo como .csv.</p>
+<p>CSV es una tabla de texto, con las columnas separadas por comas. Para guardarla: copia la respuesta, pégala en el Bloc de notas (Windows) o en TextEdit en modo de texto sin formato (Mac) y guárdala como <code>mi-familia.csv</code> dentro de la carpeta del proyecto. O pégalo en Google Sheets y descárgalo como .csv. En el Bloc de notas, en "Tipo", elige "Todos los archivos" (si no, queda <code>.csv.txt</code>), y no copies las líneas con <code>```</code> si el chat las agrega (el script también las ignora). El script acepta coma o punto y coma, y el estado con o sin tilde (HIPÓTESIS o HIPOTESIS).</p>
 </div></div>
 <div class="step"><div class="b">3</div><div>
 <h3>Leer un documento antiguo (foto)</h3>
 <p>Aquí la IA es excelente: caligrafía difícil, latín, italiano, alemán. Lo verificas con la imagen.</p>
 <div class="pr">Esta es la foto de un registro antiguo de mi familia.
 1) Transcribe exactamente lo que está escrito, línea por línea. Donde no se pueda leer, escribe [ilegible] — no adivines.
-2) Tradúcelo al portugués.
+2) Tradúcelo al español.
 3) Enumera: nombres, fechas, lugares, padres, padrinos/testigos, profesión y el número del libro/folio/acta.
 Marca con (?) toda lectura sobre la que tengas dudas.</div>
 </div></div>
 <div class="step"><div class="b">4</div><div>
 <h3>Dónde buscar</h3>
 <p>La IA sugiere archivos y registros civiles. Abre cada enlace antes de confiar.</p>
-<div class="pr">Mi bisabuelo &lt;NOME&gt;, nacido alrededor de &lt;ANO&gt; en &lt;CIDADE, PAÍS&gt;, llegó a Brasil alrededor de &lt;ANO&gt; y vivió en &lt;CIDADE, ESTADO&gt;.
+<div class="pr">Mi bisabuelo &lt;NOMBRE&gt;, nacido alrededor de &lt;AÑO&gt; en &lt;CIUDAD, PAÍS&gt;, llegó a &lt;PAÍS&gt; alrededor de &lt;AÑO&gt; y vivió en &lt;CIUDAD, PROVINCIA&gt;.
 Enumera dónde buscar sus registros, en orden de probabilidad de éxito: archivos en línea (enlace OFICIAL y nombre exacto de la colección), registros civiles o parroquias probables, archivos de inmigración.
 Para cada uno: tipo de registro, si es gratis, si permite buscar por nombre o solo muestra imágenes.
 Si no tienes certeza de que exista un archivo, di "no tengo certeza".</div>
 </div></div>
 <div class="step"><div class="b">5</div><div>
 <h3>Investigación con pruebas (el prompt que frena las alucinaciones)</h3>
-<p>La versión segura de "encuentra parientes que no tengo". Úsala en un chat que navegue por la web.</p>
+<p>La versión segura de "encuentra parientes que no tengo". Úsala en un chat que navegue por la web: en la app de ChatGPT, toca el <b>+</b> junto al cuadro de texto y elige la búsqueda web (o el modo agente, si tu plan lo incluye). Los nombres de los botones cambian con las versiones de la app.</p>
 <div class="pr">Investiga registros públicos de &lt;NOMBRE COMPLETO&gt;, nacido alrededor de &lt;AÑO&gt; en &lt;LUGAR&gt;, hijo de &lt;PADRE&gt; y &lt;MADRE&gt;.
 REGLAS OBLIGATORIAS:
 1) Incluye a una persona en CONFIRMADOS solo si abriste un registro con NOMBRE + FECHA + LUGAR, y dame el ENLACE directo al registro y el nombre de la colección.
@@ -259,7 +262,7 @@ No completes ni confirmes a nadie sin una fuente.
 <div class="step"><div class="b">7</div><div>
 <h3>Ciudadanía: la lista de documentos</h3>
 <p>La IA organiza el camino; quienes deciden son la ley y el consulado. Pide la fecha de la información. Los términos del prompt (copia íntegra, apostilla de La Haya, traducción jurada) están en el <a href="#glossario">glosario</a>.</p>
-<div class="pr">Mi antepasado &lt;NOME&gt;, nacido en &lt;ANO&gt; en &lt;CIDADE, PAÍS&gt;, es mi &lt;bisabuelo/abuelo&gt;. La línea hasta mí es: &lt;ele&gt; → &lt;filho&gt; → &lt;neto&gt; → yo.
+<div class="pr">Mi antepasado &lt;NOMBRE&gt;, nacido en &lt;AÑO&gt; en &lt;CIUDAD, PAÍS&gt;, es mi &lt;bisabuelo/abuelo&gt;. La línea hasta mí es: &lt;él&gt; → &lt;hijo&gt; → &lt;nieto&gt; → yo.
 1) Enumera las actas que normalmente se solicitan para probar esta línea, de cada generación, y de dónde se obtiene cada una.
 2) Di cuáles suelen requerir copia íntegra, apostilla de La Haya y traducción jurada.
 3) Explica, con la FECHA de tu información, qué debo verificar en la ley vigente de &lt;PAÍS&gt; y dame el enlace al sitio oficial del consulado.
@@ -267,11 +270,16 @@ No completes ni confirmes a nadie sin una fuente.
 </div></div>
 <div class="step"><div class="b">8</div><div>
 <h3>Árbol visual solo con quienes fueron confirmados</h3>
-<p>Abre la terminal dentro de la carpeta del proyecto (Windows: PowerShell; Mac: app Terminal; Linux: terminal) y ejecuta el script con la tabla del paso 2. También verifica lo siguiente: quien esté CONFIRMADO sin fuente pasa a ser una hipótesis, y las edades imposibles del padre o la madre generan una advertencia.</p>
-<pre><span class="k">python3</span> scripts/arvore.py minha-familia.csv --saida minha-arvore.html   <span class="c"># abrir en el navegador</span>
-<span class="k">python3</span> scripts/arvore.py minha-familia.csv --so-confirmados --saida so-provas.html
-<span class="k">python3</span> scripts/arvore.py modelos/pessoas.csv --saida exemplo.html   <span class="c"># familia ficticia de ejemplo</span></pre>
-<p>El archivo generado se abre en el navegador y necesita internet para dibujar. ¿No tienes computadora? Pídele al chat: "dibuja esta tabla en Mermaid, HIPÓTESIS con borde discontinuo, sin agregar a nadie" y pega el resultado en mermaid.live para ver el dibujo. Para llevar el árbol a un sitio de genealogía, usa el formato GEDCOM (.ged).</p>
+<p>Abre la terminal dentro de la carpeta del proyecto: en Windows, abre la carpeta en el Explorador de archivos, haz clic en la barra de direcciones, escribe <code>powershell</code> y pulsa Enter; en Mac, clic derecho en la carpeta → Servicios → Nuevo Terminal en la carpeta; en Linux, clic derecho → Abrir en la terminal. Después ejecuta el script con la tabla del paso 2. También verifica que quien esté CONFIRMADO sin fuente (o solo con la dirección del sitio) pase a ser una hipótesis, y avisa cuando la edad del padre o la madre es imposible. El script lee las columnas en español del paso 2 y responde en español.</p>
+<pre><span class="c"># Mac y Linux</span>
+<span class="k">python3</span> scripts/arvore.py mi-familia.csv --salida mi-arbol.html   <span class="c"># guarda mi-arbol.html</span>
+<span class="k">python3</span> scripts/arvore.py mi-familia.csv --solo-confirmados --salida solo-pruebas.html
+<span class="k">python3</span> scripts/arvore.py modelos/personas.csv --salida ejemplo.html   <span class="c"># familia ficticia de ejemplo</span>
+<span class="c"># Windows (PowerShell)</span>
+<span class="k">py</span> scripts\arvore.py mi-familia.csv --salida mi-arbol.html
+<span class="k">py</span> scripts\arvore.py mi-familia.csv --solo-confirmados --salida solo-pruebas.html
+<span class="k">py</span> scripts\arvore.py modelos\personas.csv --salida ejemplo.html</pre>
+<p>El script solo guarda el archivo: haz doble clic en <code>mi-arbol.html</code> en la carpeta para abrirlo en el navegador (necesita internet para dibujar). ¿No tienes computadora? Pídele al chat: "dibuja esta tabla en Mermaid, HIPÓTESIS con borde discontinuo, sin agregar a nadie" y pega el resultado en mermaid.live para ver el dibujo. Para llevar el árbol a un sitio de genealogía, el formato estándar es GEDCOM (.ged): arma el árbol directamente en FamilySearch o MyHeritage, o pide al chat que convierta la tabla a GEDCOM e impórtala en el sitio.</p>
 </div></div>
 </div></section>
 <section id="onde"><div class="wrap">
@@ -279,16 +287,19 @@ No completes ni confirmes a nadie sin una fuente.
 <h2>Los archivos que la IA no puede consultar por ti</h2>
 <p class="sub">Empieza en casa: certificados, libretas de trabajo, pasaportes, cartas y fotos con anotaciones al dorso. Después, consulta estos archivos.</p>
 <div class="tblw"><table class="tbl">
-<tr><th>Dónde</th><th>Lo que necesitas</th><th>Costo</th></tr>
+<tr><th>Dónde</th><th>Qué tiene</th><th>Costo</th></tr>
 <tr><td><b>FamilySearch</b> (familysearch.org)</td><td>Registros civiles y parroquiales de varios estados de Brasil y del mundo. Muchos solo están disponibles como imágenes, sin búsqueda por nombre: hay que pasar las páginas.</td><td>Gratis</td></tr>
-<tr><td><b>Registro civil</b></td><td>El certificado de <b>copia íntegra</b> (copia fiel del libro) es la que sirve para la ciudadanía. Solicítala en el registro civil o por internet.</td><td>De pago</td></tr>
+<tr><td><b>Registro civil</b></td><td>La <b>copia íntegra</b> (copia fiel del libro) es la que sirve para la ciudadanía. Solicítala en el registro civil o por internet.</td><td>De pago</td></tr>
 <tr><td><b>Parroquias y curias</b></td><td>Bautismos, matrimonios y defunciones de antes de que se generalizara el registro civil.</td><td>Varía</td></tr>
 <tr><td><b>Archivos públicos y Archivo Nacional</b></td><td>Inmigración, naturalización, inventarios. El Archivo Nacional conserva listas de pasajeros de barcos que llegaron a Río.</td><td>Gratis</td></tr>
 <tr><td><b>Museu da Imigração (SP)</b></td><td>Registros de la Hospedaria de Imigrantes y listas de pasajeros.</td><td>Gratis</td></tr>
-<tr><td><b>Hemeroteca Digital (Biblioteca Nacional)</b></td><td>Periódicos antiguos: matrimonios, fallecimientos, llegada de barcos.</td><td>Gratis</td></tr>
+<tr><td><b>CEMLA</b> (Argentina)</td><td>Centro de Estudios Migratorios Latinoamericanos: base de llegadas de inmigrantes al puerto de Buenos Aires.</td><td>Varía</td></tr>
+<tr><td><b>Archivo General de la Nación y registros civiles</b> (Argentina y otros países)</td><td>En cada país, el registro civil (de la provincia o del municipio) y el archivo nacional guardan nacimientos, matrimonios, defunciones e inmigración. Pide al chat la lista de tu país con el prompt 4 y abre cada enlace.</td><td>Varía</td></tr>
+<tr><td><b>Hemeroteca Digital (Biblioteca Nacional de Brasil)</b></td><td>Periódicos antiguos: matrimonios, fallecimientos, llegada de barcos.</td><td>Gratis</td></tr>
 <tr><td><b>Portal Antenati</b> (Italia)</td><td>Registros civiles de los archivos estatales italianos.</td><td>Gratis</td></tr>
 <tr><td><b>Digitarq</b> (Portugal)</td><td>Registros parroquiales digitalizados de los archivos distritales.</td><td>Gratis</td></tr>
-<tr><td><b>Partida</b> (Alemania, Austria, Polonia)</td><td>Libros parroquiales católicos.</td><td>Gratis</td></tr>
+<tr><td><b>Matricula</b> (Alemania, Austria, Polonia)</td><td>Libros parroquiales católicos.</td><td>Gratis</td></tr>
+<tr><td><b>Szukaj w Archiwach</b> y <b>Geneteka</b> (Polonia)</td><td>Archivos estatales polacos digitalizados e índice de registros parroquiales y civiles hecho por voluntarios.</td><td>Gratis</td></tr>
 <tr><td><b>Prueba de ADN</b> (MyHeritage, Ancestry y otros)</td><td>Compara tu ADN con el de otras personas que se hicieron pruebas e identifica primos reales. Cada empresa compara con su propia base; algunos sitios aceptan el archivo de ADN de otra empresa (carga), lo que amplía la búsqueda. El ADN es un dato sensible: lee la política de privacidad.</td><td>De pago</td></tr>
 </table></div>
 </div></section>
@@ -303,7 +314,7 @@ No completes ni confirmes a nadie sin una fuente.
 <h3 style="margin-top:18px">🚩 Señales de invención</h3>
 <p>Enlace que no abre o muestra a otra persona · "según registros públicos" sin decir cuáles · fechas demasiado redondas · personas que encajan perfectamente con lo que contaste · la fuente cambia cuando vuelves a preguntar.</p>
 </div>
-<figure><img alt="Árbol de ejemplo generado por el script: confirmados con borde ámbar, hipótesis con líneas discontinuas" loading="lazy" src="../assets/exemplo-arvore.jpg"/><figcaption>Salida de <code>scripts/arvore.py</code> con la familia ficticia de ejemplo: confirmados con borde ámbar, hipótesis con líneas discontinuas. «Luigi» se marcó como confirmado sin fuente y el script lo rebajó.</figcaption></figure>
+<figure><img alt="Árbol de ejemplo generado por el script: confirmados con borde ámbar, hipótesis con líneas discontinuas" loading="lazy" src="../assets/exemplo-arvore-es.jpg"/><figcaption>Salida de <code>scripts/arvore.py</code> con la familia ficticia de ejemplo: confirmados con borde ámbar, hipótesis con líneas discontinuas. «Luigi» se marcó como confirmado sin fuente y el script lo rebajó.</figcaption></figure>
 </div>
 </div></section>
 <section id="glossario"><div class="wrap">
@@ -316,7 +327,7 @@ No completes ni confirmes a nadie sin una fuente.
 <div class="card"><h3>Indexado</h3><p>Registro que puedes encontrar escribiendo el nombre. Si no está indexado, solo aparece la foto del libro: hay que pasar las páginas una por una.</p></div>
 <div class="card"><h3>Registro parroquial</h3><p>Bautismo, matrimonio o defunción anotados en el libro de la iglesia. Antes del registro civil, era el registro principal.</p></div>
 <div class="card"><h3>Copia íntegra</h3><p>Certificado que copia el registro completo del libro del registro civil, con padres, abuelos y anotaciones. Es el que sirve para la ciudadanía.</p></div>
-<div class="card"><h3>Apostilla de La Haya</h3><p>Sello hecho en una notaría que permite que un documento brasileño tenga validez en otro país.</p></div>
+<div class="card"><h3>Apostilla de La Haya</h3><p>Certificado que pone una oficina autorizada (en Brasil, una notaría; en otros países, la cancillería u otro organismo) para que un documento de un país tenga validez en otro.</p></div>
 <div class="card"><h3>Traducción jurada</h3><p>Traducción oficial, realizada por un traductor público registrado, exigida en los procesos de ciudadanía.</p></div>
 <div class="card"><h3>CSV</h3><p>Tabla guardada como texto, con columnas separadas por comas. Se abre en Excel y Google Sheets.</p></div>
 <div class="card"><h3>Mermaid y GEDCOM</h3><p>Mermaid es un lenguaje que convierte texto en diagramas. GEDCOM (.ged) es el archivo estándar que permite llevar un árbol de un sitio de genealogía a otro.</p></div>

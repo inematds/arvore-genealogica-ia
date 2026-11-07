@@ -46,6 +46,58 @@ class TestArvore(unittest.TestCase):
         self.assertIn("class p2 hip", r.stdout)
         self.assertIn("class p3 conf", r.stdout)
 
+    def test_fonte_legitima_com_here_nao_rebaixa(self):
+        r = rodar(csv_tmp("p1,A,1900,,,,\"Ellis Island manifest, original here at home\",CONFIRMADO,\n"
+                          "p2,B,1900,,,,certidão do cartório Cole,CONFIRMADO,\n"), "--mermaid")
+        self.assertIn("class p1 conf", r.stdout)
+        self.assertIn("class p2 conf", r.stdout)
+
+    def test_tabela_em_ingles(self):
+        modelo = os.path.join(AQUI, "..", "modelos", "people.csv")
+        with tempfile.TemporaryDirectory() as d:
+            saida = os.path.join(d, "a.html")
+            r = rodar(modelo, "--output", saida)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertIn("3 confirmed, 5 hypotheses, 2 warnings", r.stdout)
+            self.assertIn("without a source", r.stderr)
+            t = open(saida, encoding="utf-8").read()
+            self.assertIn('lang="en"', t)
+            self.assertIn("(hypothesis)", t)
+
+    def test_tabela_em_espanhol(self):
+        modelo = os.path.join(AQUI, "..", "modelos", "personas.csv")
+        r = rodar(modelo, "--mermaid")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertNotIn("desconocido", r.stderr)  # HIPÓTESIS com acento é aceito
+        self.assertIn("sin fuente", r.stderr)
+        self.assertIn("(hipótesis)", r.stdout)
+        self.assertIn("class p04 conf", r.stdout)
+
+    def test_cerca_do_chat_e_ponto_e_virgula(self):
+        f = tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False, encoding="utf-8")
+        f.write("```csv\nid;nombre;nacimiento;lugar_nacimiento;padre_id;madre_id;fuente;estado;nota\n"
+                "p1;Ana;1900;;;;acta 12;CONFIRMADO;\n```\n"); f.close()
+        r = rodar(f.name, "--mermaid")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("class p1 conf", r.stdout)
+
+    def test_cabecalho_desconhecido_avisa_em_tres_linguas(self):
+        f = tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False)
+        f.write("a,b\n1,2\n"); f.close()
+        r = rodar(f.name, "--mermaid")
+        self.assertNotEqual(r.returncode, 0)
+        for s in ("faltam colunas", "missing columns", "faltan columnas"):
+            self.assertIn(s, r.stderr)
+
+    def test_csv_do_excel_cp1252_e_fonte_nao_ha(self):
+        f = tempfile.NamedTemporaryFile("wb", suffix=".csv", delete=False)
+        f.write("id;nome;nascimento;local_nascimento;pai_id;mae_id;fonte;status;nota\r\n"
+                "p1;João;1900;;;;certidão;CONFIRMADO;\r\np2;Zé;1900;;;;não há;CONFIRMADO;\r\n".encode("cp1252")); f.close()
+        r = rodar(f.name, "--mermaid")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("class p1 conf", r.stdout)
+        self.assertIn("class p2 hip", r.stdout)
+
     def test_idade_impossivel_avisa(self):
         r = rodar(csv_tmp("p1,Filho,1900,,p2,,x,CONFIRMADO,\np2,Pai,1895,,,,x,CONFIRMADO,\n"), "--mermaid")
         self.assertIn("teria 5 anos", r.stderr)

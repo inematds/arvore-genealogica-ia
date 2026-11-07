@@ -29,35 +29,38 @@ Every new person added to the tree needs a record with **name + date + place** t
 | [`docs/onde-pesquisar.md`](docs/onde-pesquisar.md) | Real archives: FamilySearch, registry office (full record), parishes, archives, Immigration Museum, Hemeroteca, Antenati, Digitarq, Matricula, DNA. |
 | [`docs/checklist-conferencia.md`](docs/checklist-conferencia.md) | What to check before adding someone to the tree, and signs of fabrication. |
 | [`scripts/arvore.py`](scripts/arvore.py) | Turns the CSV table into a visual tree (HTML), with automatic verification. |
-| [`modelos/pessoas.csv`](modelos/pessoas.csv) | Sample table (fictional family). |
+| [`modelos/people.csv`](modelos/people.csv) | Sample table in English (fictional family); PT: `pessoas.csv`, ES: `personas.csv`. |
 
 ## The process, from start to finish
 
 | # | Step | Command / file | Who |
 |---|---|---|---|
 | 1 | Interview the family and gather papers from home | [`prompts/01-entrevista-familia.md`](prompts/01-entrevista-familia.md) | 🧠 you + AI chat |
-| 2 | Organize everything in a table with `fonte` and `status` | [`prompts/02-organizar-arvore.md`](prompts/02-organizar-arvore.md) → `minha-familia.csv` | 🧠 you + AI chat |
+| 2 | Organize everything in a table with `source` and `status` | prompt 2 on the [guide](https://inematds.github.io/arvore-genealogica-ia/guia/en/#guia) → `my-family.csv` | 🧠 you + AI chat |
 | 3 | Transcribe and translate old documents (photo) | [`prompts/03-ler-documento-antigo.md`](prompts/03-ler-documento-antigo.md) | 🧠 you + AI chat |
 | 4 | Find out where to search and open each link | [`prompts/04-onde-procurar.md`](prompts/04-onde-procurar.md) + [`docs/onde-pesquisar.md`](docs/onde-pesquisar.md) | 🧠 you |
 | 5 | Research with evidence (direct link, or HYPOTHESIS) | [`prompts/05-pesquisa-com-prova.md`](prompts/05-pesquisa-com-prova.md) | 🧠 you + chat with browsing |
 | 6 | Audit lists already provided by AI (new chat) | [`prompts/06-auditar-resposta.md`](prompts/06-auditar-resposta.md) | 🧠 you + AI chat |
 | 7 | Verify each new person | [`docs/checklist-conferencia.md`](docs/checklist-conferencia.md) | 🧠 you |
 | 8 | (Optional) list of documents for citizenship | [`prompts/07-cidadania-documentos.md`](prompts/07-cidadania-documentos.md) → consulate | 🧠 you |
-| 9 | Draw the tree with automatic verification | `python3 scripts/arvore.py minha-familia.csv --saida minha-arvore.html` | ⚙️ script |
+| 9 | Draw the tree with automatic verification | `python3 scripts/arvore.py my-family.csv --output my-tree.html` | ⚙️ script |
 
 ## Run the script
 
 ```bash
 git clone https://github.com/inematds/arvore-genealogica-ia
 cd arvore-genealogica-ia
-python3 scripts/arvore.py modelos/pessoas.csv --saida exemplo.html        # fictional family
-python3 scripts/arvore.py minha-familia.csv --so-confirmados --saida so-provas.html
-python3 -m unittest discover tests                                        # 9 tests
+python3 scripts/arvore.py modelos/people.csv --output example.html         # fictional family
+python3 scripts/arvore.py my-family.csv --only-confirmed --output only-proof.html
+python3 -m unittest discover tests                                        # 15 tests
+py scripts\arvore.py my-family.csv --output my-tree.html                 # Windows (PowerShell)
 ```
+
+The script also reads English columns (`id,name,birth,place_of_birth,father_id,mother_id,source,status,note`, `CONFIRMED`/`HYPOTHESIS`) and answers in English — see `modelos/people.csv`.
 
 The script has no dependencies (only Python 3); the generated HTML needs internet access to render. It warns when:
 - a person is **CONFIRMED without a source**, or with a generic source (just the website address), and downgrades them to HYPOTHESIS;
-- a `pai_id`/`mae_id` does not exist in the table;
+- a `father_id`/`mother_id` does not exist in the table;
 - the father or mother would be younger than 12 or older than 70 when the child was born.
 
 ## Citizenship: a note
